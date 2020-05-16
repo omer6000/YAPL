@@ -3,65 +3,81 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Grammar
 
 Rule 0     S' -> calc
-Rule 1     calc -> number
-Rule 2     calc -> var_assign
-Rule 3     calc -> empty
-Rule 4     var_assign -> NAME ASSIGNMENT number
-Rule 5     var_assign -> NAME ASSIGNMENT NAME
-Rule 6     number -> number PLUS number
-Rule 7     number -> number MULTIPLY number
-Rule 8     number -> number DIVIDE number
-Rule 9     number -> number MINUS number
-Rule 10    number -> INT
-Rule 11    number -> DOUBLE
-Rule 12    empty -> <empty>
+Rule 1     calc -> declaration
+Rule 2     calc -> empty
+Rule 3     declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON
+Rule 4     declaration -> INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON
+Rule 5     declaration -> STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON
+Rule 6     declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON
+Rule 7     declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON
+Rule 8     double_expression -> double_expression PLUS double_expression
+Rule 9     double_expression -> double_expression MINUS double_expression
+Rule 10    double_expression -> double_expression MULTIPLY double_expression
+Rule 11    double_expression -> double_expression DIVIDE double_expression
+Rule 12    double_expression -> DOUBLE
+Rule 13    int_expression -> int_expression PLUS int_expression
+Rule 14    int_expression -> int_expression MINUS int_expression
+Rule 15    int_expression -> int_expression MULTIPLY int_expression
+Rule 16    int_expression -> int_expression DIVIDE int_expression
+Rule 17    int_expression -> INT
+Rule 18    string_expression -> string_expression PLUS string_expression
+Rule 19    string_expression -> STRING
+Rule 20    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ASSIGNMENT           : 4 5
-DIVIDE               : 8
-DOUBLE               : 11
-INT                  : 10
-MINUS                : 9
-MULTIPLY             : 7
-NAME                 : 4 5 5
-PLUS                 : 6
+ASSIGNMENT           : 3 4 5 6 7
+BOOL                 : 7
+BOOL_TYPE            : 7
+CHAR                 : 6
+CHARACTER_TYPE       : 6
+DIVIDE               : 11 16
+DOUBLE               : 12
+DOUBLE_TYPE          : 3
+INT                  : 17
+INT_TYPE             : 4
+MINUS                : 9 14
+MULTIPLY             : 10 15
+NAME                 : 3 4 5 6 7
+PLUS                 : 8 13 18
+SEMICOLON            : 3 4 5 6 7
+STRING               : 19
+STRING_TYPE          : 5
 error                : 
 
 Nonterminals, with rules where they appear
 
 calc                 : 0
-empty                : 3
-number               : 1 4 6 6 7 7 8 8 9 9
-var_assign           : 2
+declaration          : 1
+double_expression    : 3 8 8 9 9 10 10 11 11
+empty                : 2
+int_expression       : 4 13 13 14 14 15 15 16 16
+string_expression    : 5 18 18
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . calc
-    (1) calc -> . number
-    (2) calc -> . var_assign
-    (3) calc -> . empty
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
-    (4) var_assign -> . NAME ASSIGNMENT number
-    (5) var_assign -> . NAME ASSIGNMENT NAME
-    (12) empty -> .
+    (1) calc -> . declaration
+    (2) calc -> . empty
+    (3) declaration -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON
+    (4) declaration -> . INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON
+    (5) declaration -> . STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON
+    (6) declaration -> . CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON
+    (7) declaration -> . BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON
+    (20) empty -> .
 
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
-    NAME            shift and go to state 7
-    $end            reduce using rule 12 (empty -> .)
+    DOUBLE_TYPE     shift and go to state 4
+    INT_TYPE        shift and go to state 5
+    STRING_TYPE     shift and go to state 6
+    CHARACTER_TYPE  shift and go to state 7
+    BOOL_TYPE       shift and go to state 8
+    $end            reduce using rule 20 (empty -> .)
 
     calc                           shift and go to state 1
-    number                         shift and go to state 2
-    var_assign                     shift and go to state 3
-    empty                          shift and go to state 4
+    declaration                    shift and go to state 2
+    empty                          shift and go to state 3
 
 state 1
 
@@ -71,238 +87,537 @@ state 1
 
 state 2
 
-    (1) calc -> number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (1) calc -> declaration .
 
-    $end            reduce using rule 1 (calc -> number .)
-    PLUS            shift and go to state 8
-    MULTIPLY        shift and go to state 9
-    DIVIDE          shift and go to state 10
-    MINUS           shift and go to state 11
+    $end            reduce using rule 1 (calc -> declaration .)
 
 
 state 3
 
-    (2) calc -> var_assign .
+    (2) calc -> empty .
 
-    $end            reduce using rule 2 (calc -> var_assign .)
+    $end            reduce using rule 2 (calc -> empty .)
 
 
 state 4
 
-    (3) calc -> empty .
+    (3) declaration -> DOUBLE_TYPE . NAME ASSIGNMENT double_expression SEMICOLON
 
-    $end            reduce using rule 3 (calc -> empty .)
+    NAME            shift and go to state 9
 
 
 state 5
 
-    (10) number -> INT .
+    (4) declaration -> INT_TYPE . NAME ASSIGNMENT int_expression SEMICOLON
 
-    PLUS            reduce using rule 10 (number -> INT .)
-    MULTIPLY        reduce using rule 10 (number -> INT .)
-    DIVIDE          reduce using rule 10 (number -> INT .)
-    MINUS           reduce using rule 10 (number -> INT .)
-    $end            reduce using rule 10 (number -> INT .)
+    NAME            shift and go to state 10
 
 
 state 6
 
-    (11) number -> DOUBLE .
+    (5) declaration -> STRING_TYPE . NAME ASSIGNMENT string_expression SEMICOLON
 
-    PLUS            reduce using rule 11 (number -> DOUBLE .)
-    MULTIPLY        reduce using rule 11 (number -> DOUBLE .)
-    DIVIDE          reduce using rule 11 (number -> DOUBLE .)
-    MINUS           reduce using rule 11 (number -> DOUBLE .)
-    $end            reduce using rule 11 (number -> DOUBLE .)
+    NAME            shift and go to state 11
 
 
 state 7
 
-    (4) var_assign -> NAME . ASSIGNMENT number
-    (5) var_assign -> NAME . ASSIGNMENT NAME
+    (6) declaration -> CHARACTER_TYPE . NAME ASSIGNMENT CHAR SEMICOLON
 
-    ASSIGNMENT      shift and go to state 12
+    NAME            shift and go to state 12
 
 
 state 8
 
-    (6) number -> number PLUS . number
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
+    (7) declaration -> BOOL_TYPE . NAME ASSIGNMENT BOOL SEMICOLON
 
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
+    NAME            shift and go to state 13
 
-    number                         shift and go to state 13
 
 state 9
 
-    (7) number -> number MULTIPLY . number
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
+    (3) declaration -> DOUBLE_TYPE NAME . ASSIGNMENT double_expression SEMICOLON
 
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
+    ASSIGNMENT      shift and go to state 14
 
-    number                         shift and go to state 14
 
 state 10
 
-    (8) number -> number DIVIDE . number
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
+    (4) declaration -> INT_TYPE NAME . ASSIGNMENT int_expression SEMICOLON
 
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
+    ASSIGNMENT      shift and go to state 15
 
-    number                         shift and go to state 15
 
 state 11
 
-    (9) number -> number MINUS . number
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
+    (5) declaration -> STRING_TYPE NAME . ASSIGNMENT string_expression SEMICOLON
 
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
+    ASSIGNMENT      shift and go to state 16
 
-    number                         shift and go to state 16
 
 state 12
 
-    (4) var_assign -> NAME ASSIGNMENT . number
-    (5) var_assign -> NAME ASSIGNMENT . NAME
-    (6) number -> . number PLUS number
-    (7) number -> . number MULTIPLY number
-    (8) number -> . number DIVIDE number
-    (9) number -> . number MINUS number
-    (10) number -> . INT
-    (11) number -> . DOUBLE
+    (6) declaration -> CHARACTER_TYPE NAME . ASSIGNMENT CHAR SEMICOLON
 
-    NAME            shift and go to state 17
-    INT             shift and go to state 5
-    DOUBLE          shift and go to state 6
+    ASSIGNMENT      shift and go to state 17
 
-    number                         shift and go to state 18
 
 state 13
 
-    (6) number -> number PLUS number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (7) declaration -> BOOL_TYPE NAME . ASSIGNMENT BOOL SEMICOLON
 
-    PLUS            reduce using rule 6 (number -> number PLUS number .)
-    MINUS           reduce using rule 6 (number -> number PLUS number .)
-    $end            reduce using rule 6 (number -> number PLUS number .)
-    MULTIPLY        shift and go to state 9
-    DIVIDE          shift and go to state 10
-
-  ! MULTIPLY        [ reduce using rule 6 (number -> number PLUS number .) ]
-  ! DIVIDE          [ reduce using rule 6 (number -> number PLUS number .) ]
-  ! PLUS            [ shift and go to state 8 ]
-  ! MINUS           [ shift and go to state 11 ]
+    ASSIGNMENT      shift and go to state 18
 
 
 state 14
 
-    (7) number -> number MULTIPLY number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (3) declaration -> DOUBLE_TYPE NAME ASSIGNMENT . double_expression SEMICOLON
+    (8) double_expression -> . double_expression PLUS double_expression
+    (9) double_expression -> . double_expression MINUS double_expression
+    (10) double_expression -> . double_expression MULTIPLY double_expression
+    (11) double_expression -> . double_expression DIVIDE double_expression
+    (12) double_expression -> . DOUBLE
 
-    PLUS            reduce using rule 7 (number -> number MULTIPLY number .)
-    MULTIPLY        reduce using rule 7 (number -> number MULTIPLY number .)
-    DIVIDE          reduce using rule 7 (number -> number MULTIPLY number .)
-    MINUS           reduce using rule 7 (number -> number MULTIPLY number .)
-    $end            reduce using rule 7 (number -> number MULTIPLY number .)
+    DOUBLE          shift and go to state 20
 
-  ! PLUS            [ shift and go to state 8 ]
-  ! MULTIPLY        [ shift and go to state 9 ]
-  ! DIVIDE          [ shift and go to state 10 ]
-  ! MINUS           [ shift and go to state 11 ]
-
+    double_expression              shift and go to state 19
 
 state 15
 
-    (8) number -> number DIVIDE number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (4) declaration -> INT_TYPE NAME ASSIGNMENT . int_expression SEMICOLON
+    (13) int_expression -> . int_expression PLUS int_expression
+    (14) int_expression -> . int_expression MINUS int_expression
+    (15) int_expression -> . int_expression MULTIPLY int_expression
+    (16) int_expression -> . int_expression DIVIDE int_expression
+    (17) int_expression -> . INT
 
-    PLUS            reduce using rule 8 (number -> number DIVIDE number .)
-    MULTIPLY        reduce using rule 8 (number -> number DIVIDE number .)
-    DIVIDE          reduce using rule 8 (number -> number DIVIDE number .)
-    MINUS           reduce using rule 8 (number -> number DIVIDE number .)
-    $end            reduce using rule 8 (number -> number DIVIDE number .)
+    INT             shift and go to state 22
 
-  ! PLUS            [ shift and go to state 8 ]
-  ! MULTIPLY        [ shift and go to state 9 ]
-  ! DIVIDE          [ shift and go to state 10 ]
-  ! MINUS           [ shift and go to state 11 ]
-
+    int_expression                 shift and go to state 21
 
 state 16
 
-    (9) number -> number MINUS number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (5) declaration -> STRING_TYPE NAME ASSIGNMENT . string_expression SEMICOLON
+    (18) string_expression -> . string_expression PLUS string_expression
+    (19) string_expression -> . STRING
 
-    PLUS            reduce using rule 9 (number -> number MINUS number .)
-    MINUS           reduce using rule 9 (number -> number MINUS number .)
-    $end            reduce using rule 9 (number -> number MINUS number .)
-    MULTIPLY        shift and go to state 9
-    DIVIDE          shift and go to state 10
+    STRING          shift and go to state 24
 
-  ! MULTIPLY        [ reduce using rule 9 (number -> number MINUS number .) ]
-  ! DIVIDE          [ reduce using rule 9 (number -> number MINUS number .) ]
-  ! PLUS            [ shift and go to state 8 ]
-  ! MINUS           [ shift and go to state 11 ]
-
+    string_expression              shift and go to state 23
 
 state 17
 
-    (5) var_assign -> NAME ASSIGNMENT NAME .
+    (6) declaration -> CHARACTER_TYPE NAME ASSIGNMENT . CHAR SEMICOLON
 
-    $end            reduce using rule 5 (var_assign -> NAME ASSIGNMENT NAME .)
+    CHAR            shift and go to state 25
 
 
 state 18
 
-    (4) var_assign -> NAME ASSIGNMENT number .
-    (6) number -> number . PLUS number
-    (7) number -> number . MULTIPLY number
-    (8) number -> number . DIVIDE number
-    (9) number -> number . MINUS number
+    (7) declaration -> BOOL_TYPE NAME ASSIGNMENT . BOOL SEMICOLON
 
-    $end            reduce using rule 4 (var_assign -> NAME ASSIGNMENT number .)
-    PLUS            shift and go to state 8
-    MULTIPLY        shift and go to state 9
-    DIVIDE          shift and go to state 10
-    MINUS           shift and go to state 11
+    BOOL            shift and go to state 26
+
+
+state 19
+
+    (3) declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression . SEMICOLON
+    (8) double_expression -> double_expression . PLUS double_expression
+    (9) double_expression -> double_expression . MINUS double_expression
+    (10) double_expression -> double_expression . MULTIPLY double_expression
+    (11) double_expression -> double_expression . DIVIDE double_expression
+
+    SEMICOLON       shift and go to state 27
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+    MULTIPLY        shift and go to state 30
+    DIVIDE          shift and go to state 31
+
+
+state 20
+
+    (12) double_expression -> DOUBLE .
+
+    SEMICOLON       reduce using rule 12 (double_expression -> DOUBLE .)
+    PLUS            reduce using rule 12 (double_expression -> DOUBLE .)
+    MINUS           reduce using rule 12 (double_expression -> DOUBLE .)
+    MULTIPLY        reduce using rule 12 (double_expression -> DOUBLE .)
+    DIVIDE          reduce using rule 12 (double_expression -> DOUBLE .)
+
+
+state 21
+
+    (4) declaration -> INT_TYPE NAME ASSIGNMENT int_expression . SEMICOLON
+    (13) int_expression -> int_expression . PLUS int_expression
+    (14) int_expression -> int_expression . MINUS int_expression
+    (15) int_expression -> int_expression . MULTIPLY int_expression
+    (16) int_expression -> int_expression . DIVIDE int_expression
+
+    SEMICOLON       shift and go to state 32
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    MULTIPLY        shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+
+state 22
+
+    (17) int_expression -> INT .
+
+    SEMICOLON       reduce using rule 17 (int_expression -> INT .)
+    PLUS            reduce using rule 17 (int_expression -> INT .)
+    MINUS           reduce using rule 17 (int_expression -> INT .)
+    MULTIPLY        reduce using rule 17 (int_expression -> INT .)
+    DIVIDE          reduce using rule 17 (int_expression -> INT .)
+
+
+state 23
+
+    (5) declaration -> STRING_TYPE NAME ASSIGNMENT string_expression . SEMICOLON
+    (18) string_expression -> string_expression . PLUS string_expression
+
+    SEMICOLON       shift and go to state 37
+    PLUS            shift and go to state 38
+
+
+state 24
+
+    (19) string_expression -> STRING .
+
+    SEMICOLON       reduce using rule 19 (string_expression -> STRING .)
+    PLUS            reduce using rule 19 (string_expression -> STRING .)
+
+
+state 25
+
+    (6) declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 39
+
+
+state 26
+
+    (7) declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL . SEMICOLON
+
+    SEMICOLON       shift and go to state 40
+
+
+state 27
+
+    (3) declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON .
+
+    $end            reduce using rule 3 (declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON .)
+
+
+state 28
+
+    (8) double_expression -> double_expression PLUS . double_expression
+    (8) double_expression -> . double_expression PLUS double_expression
+    (9) double_expression -> . double_expression MINUS double_expression
+    (10) double_expression -> . double_expression MULTIPLY double_expression
+    (11) double_expression -> . double_expression DIVIDE double_expression
+    (12) double_expression -> . DOUBLE
+
+    DOUBLE          shift and go to state 20
+
+    double_expression              shift and go to state 41
+
+state 29
+
+    (9) double_expression -> double_expression MINUS . double_expression
+    (8) double_expression -> . double_expression PLUS double_expression
+    (9) double_expression -> . double_expression MINUS double_expression
+    (10) double_expression -> . double_expression MULTIPLY double_expression
+    (11) double_expression -> . double_expression DIVIDE double_expression
+    (12) double_expression -> . DOUBLE
+
+    DOUBLE          shift and go to state 20
+
+    double_expression              shift and go to state 42
+
+state 30
+
+    (10) double_expression -> double_expression MULTIPLY . double_expression
+    (8) double_expression -> . double_expression PLUS double_expression
+    (9) double_expression -> . double_expression MINUS double_expression
+    (10) double_expression -> . double_expression MULTIPLY double_expression
+    (11) double_expression -> . double_expression DIVIDE double_expression
+    (12) double_expression -> . DOUBLE
+
+    DOUBLE          shift and go to state 20
+
+    double_expression              shift and go to state 43
+
+state 31
+
+    (11) double_expression -> double_expression DIVIDE . double_expression
+    (8) double_expression -> . double_expression PLUS double_expression
+    (9) double_expression -> . double_expression MINUS double_expression
+    (10) double_expression -> . double_expression MULTIPLY double_expression
+    (11) double_expression -> . double_expression DIVIDE double_expression
+    (12) double_expression -> . DOUBLE
+
+    DOUBLE          shift and go to state 20
+
+    double_expression              shift and go to state 44
+
+state 32
+
+    (4) declaration -> INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON .
+
+    $end            reduce using rule 4 (declaration -> INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON .)
+
+
+state 33
+
+    (13) int_expression -> int_expression PLUS . int_expression
+    (13) int_expression -> . int_expression PLUS int_expression
+    (14) int_expression -> . int_expression MINUS int_expression
+    (15) int_expression -> . int_expression MULTIPLY int_expression
+    (16) int_expression -> . int_expression DIVIDE int_expression
+    (17) int_expression -> . INT
+
+    INT             shift and go to state 22
+
+    int_expression                 shift and go to state 45
+
+state 34
+
+    (14) int_expression -> int_expression MINUS . int_expression
+    (13) int_expression -> . int_expression PLUS int_expression
+    (14) int_expression -> . int_expression MINUS int_expression
+    (15) int_expression -> . int_expression MULTIPLY int_expression
+    (16) int_expression -> . int_expression DIVIDE int_expression
+    (17) int_expression -> . INT
+
+    INT             shift and go to state 22
+
+    int_expression                 shift and go to state 46
+
+state 35
+
+    (15) int_expression -> int_expression MULTIPLY . int_expression
+    (13) int_expression -> . int_expression PLUS int_expression
+    (14) int_expression -> . int_expression MINUS int_expression
+    (15) int_expression -> . int_expression MULTIPLY int_expression
+    (16) int_expression -> . int_expression DIVIDE int_expression
+    (17) int_expression -> . INT
+
+    INT             shift and go to state 22
+
+    int_expression                 shift and go to state 47
+
+state 36
+
+    (16) int_expression -> int_expression DIVIDE . int_expression
+    (13) int_expression -> . int_expression PLUS int_expression
+    (14) int_expression -> . int_expression MINUS int_expression
+    (15) int_expression -> . int_expression MULTIPLY int_expression
+    (16) int_expression -> . int_expression DIVIDE int_expression
+    (17) int_expression -> . INT
+
+    INT             shift and go to state 22
+
+    int_expression                 shift and go to state 48
+
+state 37
+
+    (5) declaration -> STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON .
+
+    $end            reduce using rule 5 (declaration -> STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON .)
+
+
+state 38
+
+    (18) string_expression -> string_expression PLUS . string_expression
+    (18) string_expression -> . string_expression PLUS string_expression
+    (19) string_expression -> . STRING
+
+    STRING          shift and go to state 24
+
+    string_expression              shift and go to state 49
+
+state 39
+
+    (6) declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON .
+
+    $end            reduce using rule 6 (declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON .)
+
+
+state 40
+
+    (7) declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON .
+
+    $end            reduce using rule 7 (declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON .)
+
+
+state 41
+
+    (8) double_expression -> double_expression PLUS double_expression .
+    (8) double_expression -> double_expression . PLUS double_expression
+    (9) double_expression -> double_expression . MINUS double_expression
+    (10) double_expression -> double_expression . MULTIPLY double_expression
+    (11) double_expression -> double_expression . DIVIDE double_expression
+
+    SEMICOLON       reduce using rule 8 (double_expression -> double_expression PLUS double_expression .)
+    PLUS            reduce using rule 8 (double_expression -> double_expression PLUS double_expression .)
+    MINUS           reduce using rule 8 (double_expression -> double_expression PLUS double_expression .)
+    MULTIPLY        shift and go to state 30
+    DIVIDE          shift and go to state 31
+
+  ! MULTIPLY        [ reduce using rule 8 (double_expression -> double_expression PLUS double_expression .) ]
+  ! DIVIDE          [ reduce using rule 8 (double_expression -> double_expression PLUS double_expression .) ]
+  ! PLUS            [ shift and go to state 28 ]
+  ! MINUS           [ shift and go to state 29 ]
+
+
+state 42
+
+    (9) double_expression -> double_expression MINUS double_expression .
+    (8) double_expression -> double_expression . PLUS double_expression
+    (9) double_expression -> double_expression . MINUS double_expression
+    (10) double_expression -> double_expression . MULTIPLY double_expression
+    (11) double_expression -> double_expression . DIVIDE double_expression
+
+    SEMICOLON       reduce using rule 9 (double_expression -> double_expression MINUS double_expression .)
+    PLUS            reduce using rule 9 (double_expression -> double_expression MINUS double_expression .)
+    MINUS           reduce using rule 9 (double_expression -> double_expression MINUS double_expression .)
+    MULTIPLY        shift and go to state 30
+    DIVIDE          shift and go to state 31
+
+  ! MULTIPLY        [ reduce using rule 9 (double_expression -> double_expression MINUS double_expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (double_expression -> double_expression MINUS double_expression .) ]
+  ! PLUS            [ shift and go to state 28 ]
+  ! MINUS           [ shift and go to state 29 ]
+
+
+state 43
+
+    (10) double_expression -> double_expression MULTIPLY double_expression .
+    (8) double_expression -> double_expression . PLUS double_expression
+    (9) double_expression -> double_expression . MINUS double_expression
+    (10) double_expression -> double_expression . MULTIPLY double_expression
+    (11) double_expression -> double_expression . DIVIDE double_expression
+
+    SEMICOLON       reduce using rule 10 (double_expression -> double_expression MULTIPLY double_expression .)
+    PLUS            reduce using rule 10 (double_expression -> double_expression MULTIPLY double_expression .)
+    MINUS           reduce using rule 10 (double_expression -> double_expression MULTIPLY double_expression .)
+    MULTIPLY        reduce using rule 10 (double_expression -> double_expression MULTIPLY double_expression .)
+    DIVIDE          reduce using rule 10 (double_expression -> double_expression MULTIPLY double_expression .)
+
+  ! PLUS            [ shift and go to state 28 ]
+  ! MINUS           [ shift and go to state 29 ]
+  ! MULTIPLY        [ shift and go to state 30 ]
+  ! DIVIDE          [ shift and go to state 31 ]
+
+
+state 44
+
+    (11) double_expression -> double_expression DIVIDE double_expression .
+    (8) double_expression -> double_expression . PLUS double_expression
+    (9) double_expression -> double_expression . MINUS double_expression
+    (10) double_expression -> double_expression . MULTIPLY double_expression
+    (11) double_expression -> double_expression . DIVIDE double_expression
+
+    SEMICOLON       reduce using rule 11 (double_expression -> double_expression DIVIDE double_expression .)
+    PLUS            reduce using rule 11 (double_expression -> double_expression DIVIDE double_expression .)
+    MINUS           reduce using rule 11 (double_expression -> double_expression DIVIDE double_expression .)
+    MULTIPLY        reduce using rule 11 (double_expression -> double_expression DIVIDE double_expression .)
+    DIVIDE          reduce using rule 11 (double_expression -> double_expression DIVIDE double_expression .)
+
+  ! PLUS            [ shift and go to state 28 ]
+  ! MINUS           [ shift and go to state 29 ]
+  ! MULTIPLY        [ shift and go to state 30 ]
+  ! DIVIDE          [ shift and go to state 31 ]
+
+
+state 45
+
+    (13) int_expression -> int_expression PLUS int_expression .
+    (13) int_expression -> int_expression . PLUS int_expression
+    (14) int_expression -> int_expression . MINUS int_expression
+    (15) int_expression -> int_expression . MULTIPLY int_expression
+    (16) int_expression -> int_expression . DIVIDE int_expression
+
+    SEMICOLON       reduce using rule 13 (int_expression -> int_expression PLUS int_expression .)
+    PLUS            reduce using rule 13 (int_expression -> int_expression PLUS int_expression .)
+    MINUS           reduce using rule 13 (int_expression -> int_expression PLUS int_expression .)
+    MULTIPLY        shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! MULTIPLY        [ reduce using rule 13 (int_expression -> int_expression PLUS int_expression .) ]
+  ! DIVIDE          [ reduce using rule 13 (int_expression -> int_expression PLUS int_expression .) ]
+  ! PLUS            [ shift and go to state 33 ]
+  ! MINUS           [ shift and go to state 34 ]
+
+
+state 46
+
+    (14) int_expression -> int_expression MINUS int_expression .
+    (13) int_expression -> int_expression . PLUS int_expression
+    (14) int_expression -> int_expression . MINUS int_expression
+    (15) int_expression -> int_expression . MULTIPLY int_expression
+    (16) int_expression -> int_expression . DIVIDE int_expression
+
+    SEMICOLON       reduce using rule 14 (int_expression -> int_expression MINUS int_expression .)
+    PLUS            reduce using rule 14 (int_expression -> int_expression MINUS int_expression .)
+    MINUS           reduce using rule 14 (int_expression -> int_expression MINUS int_expression .)
+    MULTIPLY        shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! MULTIPLY        [ reduce using rule 14 (int_expression -> int_expression MINUS int_expression .) ]
+  ! DIVIDE          [ reduce using rule 14 (int_expression -> int_expression MINUS int_expression .) ]
+  ! PLUS            [ shift and go to state 33 ]
+  ! MINUS           [ shift and go to state 34 ]
+
+
+state 47
+
+    (15) int_expression -> int_expression MULTIPLY int_expression .
+    (13) int_expression -> int_expression . PLUS int_expression
+    (14) int_expression -> int_expression . MINUS int_expression
+    (15) int_expression -> int_expression . MULTIPLY int_expression
+    (16) int_expression -> int_expression . DIVIDE int_expression
+
+    SEMICOLON       reduce using rule 15 (int_expression -> int_expression MULTIPLY int_expression .)
+    PLUS            reduce using rule 15 (int_expression -> int_expression MULTIPLY int_expression .)
+    MINUS           reduce using rule 15 (int_expression -> int_expression MULTIPLY int_expression .)
+    MULTIPLY        reduce using rule 15 (int_expression -> int_expression MULTIPLY int_expression .)
+    DIVIDE          reduce using rule 15 (int_expression -> int_expression MULTIPLY int_expression .)
+
+  ! PLUS            [ shift and go to state 33 ]
+  ! MINUS           [ shift and go to state 34 ]
+  ! MULTIPLY        [ shift and go to state 35 ]
+  ! DIVIDE          [ shift and go to state 36 ]
+
+
+state 48
+
+    (16) int_expression -> int_expression DIVIDE int_expression .
+    (13) int_expression -> int_expression . PLUS int_expression
+    (14) int_expression -> int_expression . MINUS int_expression
+    (15) int_expression -> int_expression . MULTIPLY int_expression
+    (16) int_expression -> int_expression . DIVIDE int_expression
+
+    SEMICOLON       reduce using rule 16 (int_expression -> int_expression DIVIDE int_expression .)
+    PLUS            reduce using rule 16 (int_expression -> int_expression DIVIDE int_expression .)
+    MINUS           reduce using rule 16 (int_expression -> int_expression DIVIDE int_expression .)
+    MULTIPLY        reduce using rule 16 (int_expression -> int_expression DIVIDE int_expression .)
+    DIVIDE          reduce using rule 16 (int_expression -> int_expression DIVIDE int_expression .)
+
+  ! PLUS            [ shift and go to state 33 ]
+  ! MINUS           [ shift and go to state 34 ]
+  ! MULTIPLY        [ shift and go to state 35 ]
+  ! DIVIDE          [ shift and go to state 36 ]
+
+
+state 49
+
+    (18) string_expression -> string_expression PLUS string_expression .
+    (18) string_expression -> string_expression . PLUS string_expression
+
+    SEMICOLON       reduce using rule 18 (string_expression -> string_expression PLUS string_expression .)
+    PLUS            reduce using rule 18 (string_expression -> string_expression PLUS string_expression .)
+
+  ! PLUS            [ shift and go to state 38 ]
 

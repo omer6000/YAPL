@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEASSIGNMENT BOOL BOOL_TYPE CHAR CHARACTER_TYPE DIVIDE DOUBLE DOUBLE_TYPE INT INT_TYPE MINUS MULTIPLY NAME PLUS SEMICOLON STRING STRING_TYPE\n    calc : declaration\n         | empty\n    \n    declaration : DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON\n                | INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON\n                | STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON\n                | CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON\n                | BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON\n\n    \n    double_expression : double_expression PLUS double_expression\n                      | double_expression MINUS double_expression\n                      | double_expression MULTIPLY double_expression\n                      | double_expression DIVIDE double_expression\n    \n    double_expression : DOUBLE\n    \n    int_expression : int_expression PLUS int_expression\n                   | int_expression MINUS int_expression\n                   | int_expression MULTIPLY int_expression\n                   | int_expression DIVIDE int_expression\n    \n    int_expression : INT\n    \n    string_expression : string_expression PLUS string_expression\n    \n    string_expression : STRING\n    \n    empty :\n    '
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEASSIGNMENT BOOL BOOL_TYPE CHAR CHARACTER_TYPE DIVIDE DOUBLE DOUBLE_TYPE INT INT_TYPE MINUS MULTIPLY NAME PLUS SEMICOLON STRING STRING_TYPE\n    calc : declaration SEMICOLON\n         | declaration SEMICOLON calc\n         | variable_update SEMICOLON\n         | variable_update SEMICOLON calc\n    \n    declaration : DOUBLE_TYPE NAME ASSIGNMENT double_expression \n                | INT_TYPE NAME ASSIGNMENT int_expression \n                | STRING_TYPE NAME ASSIGNMENT string_expression \n                | CHARACTER_TYPE NAME ASSIGNMENT CHAR \n                | BOOL_TYPE NAME ASSIGNMENT BOOL \n                | empty\n\n    \n    variable_update : NAME ASSIGNMENT double_expression \n                    | NAME ASSIGNMENT int_expression \n                    | NAME ASSIGNMENT string_expression \n                    | NAME ASSIGNMENT CHAR \n                    | NAME ASSIGNMENT BOOL \n                    \n    \n    double_expression : double_expression PLUS double_expression\n                      | double_expression MINUS double_expression\n                      | double_expression MULTIPLY double_expression\n                      | double_expression DIVIDE double_expression\n    \n    double_expression : DOUBLE\n    \n    int_expression : int_expression PLUS int_expression\n                   | int_expression MINUS int_expression\n                   | int_expression MULTIPLY int_expression\n                   | int_expression DIVIDE int_expression\n    \n    int_expression : INT\n    \n    string_expression : string_expression PLUS string_expression\n    \n    string_expression : STRING\n    \n    empty :\n    '
     
-_lr_action_items = {'DOUBLE_TYPE':([0,],[4,]),'INT_TYPE':([0,],[5,]),'STRING_TYPE':([0,],[6,]),'CHARACTER_TYPE':([0,],[7,]),'BOOL_TYPE':([0,],[8,]),'$end':([0,1,2,3,27,32,37,39,40,],[-20,0,-1,-2,-3,-4,-5,-6,-7,]),'NAME':([4,5,6,7,8,],[9,10,11,12,13,]),'ASSIGNMENT':([9,10,11,12,13,],[14,15,16,17,18,]),'DOUBLE':([14,28,29,30,31,],[20,20,20,20,20,]),'INT':([15,33,34,35,36,],[22,22,22,22,22,]),'STRING':([16,38,],[24,24,]),'CHAR':([17,],[25,]),'BOOL':([18,],[26,]),'SEMICOLON':([19,20,21,22,23,24,25,26,41,42,43,44,45,46,47,48,49,],[27,-12,32,-17,37,-19,39,40,-8,-9,-10,-11,-13,-14,-15,-16,-18,]),'PLUS':([19,20,21,22,23,24,41,42,43,44,45,46,47,48,49,],[28,-12,33,-17,38,-19,-8,-9,-10,-11,-13,-14,-15,-16,-18,]),'MINUS':([19,20,21,22,41,42,43,44,45,46,47,48,],[29,-12,34,-17,-8,-9,-10,-11,-13,-14,-15,-16,]),'MULTIPLY':([19,20,21,22,41,42,43,44,45,46,47,48,],[30,-12,35,-17,30,30,-10,-11,35,35,-15,-16,]),'DIVIDE':([19,20,21,22,41,42,43,44,45,46,47,48,],[31,-12,36,-17,31,31,-10,-11,36,36,-15,-16,]),}
+_lr_action_items = {'DOUBLE_TYPE':([0,11,12,],[4,4,4,]),'INT_TYPE':([0,11,12,],[6,6,6,]),'STRING_TYPE':([0,11,12,],[7,7,7,]),'CHARACTER_TYPE':([0,11,12,],[8,8,8,]),'BOOL_TYPE':([0,11,12,],[9,9,9,]),'NAME':([0,4,6,7,8,9,11,12,],[5,13,15,16,17,18,5,5,]),'SEMICOLON':([0,2,3,10,11,12,22,23,24,25,26,27,28,29,34,44,45,46,47,48,49,50,51,52,53,54,55,56,],[-28,11,12,-10,-28,-28,-11,-12,-13,-14,-15,-20,-25,-27,-5,-6,-7,-8,-9,-16,-17,-18,-19,-21,-22,-23,-24,-26,]),'$end':([1,11,12,19,20,],[0,-1,-3,-2,-4,]),'ASSIGNMENT':([5,13,15,16,17,18,],[14,21,30,31,32,33,]),'CHAR':([14,32,],[25,46,]),'BOOL':([14,33,],[26,47,]),'DOUBLE':([14,21,35,36,37,38,],[27,27,27,27,27,27,]),'INT':([14,30,39,40,41,42,],[28,28,28,28,28,28,]),'STRING':([14,31,43,],[29,29,29,]),'PLUS':([22,23,24,27,28,29,34,44,45,48,49,50,51,52,53,54,55,56,],[35,39,43,-20,-25,-27,35,39,43,-16,-17,-18,-19,-21,-22,-23,-24,-26,]),'MINUS':([22,23,27,28,34,44,48,49,50,51,52,53,54,55,],[36,40,-20,-25,36,40,-16,-17,-18,-19,-21,-22,-23,-24,]),'MULTIPLY':([22,23,27,28,34,44,48,49,50,51,52,53,54,55,],[37,41,-20,-25,37,41,37,37,-18,-19,41,41,-23,-24,]),'DIVIDE':([22,23,27,28,34,44,48,49,50,51,52,53,54,55,],[38,42,-20,-25,38,42,38,38,-18,-19,42,42,-23,-24,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'calc':([0,],[1,]),'declaration':([0,],[2,]),'empty':([0,],[3,]),'double_expression':([14,28,29,30,31,],[19,41,42,43,44,]),'int_expression':([15,33,34,35,36,],[21,45,46,47,48,]),'string_expression':([16,38,],[23,49,]),}
+_lr_goto_items = {'calc':([0,11,12,],[1,19,20,]),'declaration':([0,11,12,],[2,2,2,]),'variable_update':([0,11,12,],[3,3,3,]),'empty':([0,11,12,],[10,10,10,]),'double_expression':([14,21,35,36,37,38,],[22,34,48,49,50,51,]),'int_expression':([14,30,39,40,41,42,],[23,44,52,53,54,55,]),'string_expression':([14,31,43,],[24,45,56,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,24 +27,32 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> calc","S'",1,None,None,None),
-  ('calc -> declaration','calc',1,'p_calc','lex.py',101),
-  ('calc -> empty','calc',1,'p_calc','lex.py',102),
-  ('declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression SEMICOLON','declaration',5,'p_declaration','lex.py',109),
-  ('declaration -> INT_TYPE NAME ASSIGNMENT int_expression SEMICOLON','declaration',5,'p_declaration','lex.py',110),
-  ('declaration -> STRING_TYPE NAME ASSIGNMENT string_expression SEMICOLON','declaration',5,'p_declaration','lex.py',111),
-  ('declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR SEMICOLON','declaration',5,'p_declaration','lex.py',112),
-  ('declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL SEMICOLON','declaration',5,'p_declaration','lex.py',113),
-  ('double_expression -> double_expression PLUS double_expression','double_expression',3,'p_double_expression','lex.py',120),
-  ('double_expression -> double_expression MINUS double_expression','double_expression',3,'p_double_expression','lex.py',121),
-  ('double_expression -> double_expression MULTIPLY double_expression','double_expression',3,'p_double_expression','lex.py',122),
-  ('double_expression -> double_expression DIVIDE double_expression','double_expression',3,'p_double_expression','lex.py',123),
-  ('double_expression -> DOUBLE','double_expression',1,'p_double_number','lex.py',129),
-  ('int_expression -> int_expression PLUS int_expression','int_expression',3,'p_int_expression','lex.py',135),
-  ('int_expression -> int_expression MINUS int_expression','int_expression',3,'p_int_expression','lex.py',136),
-  ('int_expression -> int_expression MULTIPLY int_expression','int_expression',3,'p_int_expression','lex.py',137),
-  ('int_expression -> int_expression DIVIDE int_expression','int_expression',3,'p_int_expression','lex.py',138),
-  ('int_expression -> INT','int_expression',1,'p_int_number','lex.py',144),
-  ('string_expression -> string_expression PLUS string_expression','string_expression',3,'p_string_expression','lex.py',150),
-  ('string_expression -> STRING','string_expression',1,'p_string','lex.py',156),
-  ('empty -> <empty>','empty',0,'p_empty','lex.py',162),
+  ('calc -> declaration SEMICOLON','calc',2,'p_calc','parser.py',11),
+  ('calc -> declaration SEMICOLON calc','calc',3,'p_calc','parser.py',12),
+  ('calc -> variable_update SEMICOLON','calc',2,'p_calc','parser.py',13),
+  ('calc -> variable_update SEMICOLON calc','calc',3,'p_calc','parser.py',14),
+  ('declaration -> DOUBLE_TYPE NAME ASSIGNMENT double_expression','declaration',4,'p_declaration','parser.py',24),
+  ('declaration -> INT_TYPE NAME ASSIGNMENT int_expression','declaration',4,'p_declaration','parser.py',25),
+  ('declaration -> STRING_TYPE NAME ASSIGNMENT string_expression','declaration',4,'p_declaration','parser.py',26),
+  ('declaration -> CHARACTER_TYPE NAME ASSIGNMENT CHAR','declaration',4,'p_declaration','parser.py',27),
+  ('declaration -> BOOL_TYPE NAME ASSIGNMENT BOOL','declaration',4,'p_declaration','parser.py',28),
+  ('declaration -> empty','declaration',1,'p_declaration','parser.py',29),
+  ('variable_update -> NAME ASSIGNMENT double_expression','variable_update',3,'p_variable_update','parser.py',36),
+  ('variable_update -> NAME ASSIGNMENT int_expression','variable_update',3,'p_variable_update','parser.py',37),
+  ('variable_update -> NAME ASSIGNMENT string_expression','variable_update',3,'p_variable_update','parser.py',38),
+  ('variable_update -> NAME ASSIGNMENT CHAR','variable_update',3,'p_variable_update','parser.py',39),
+  ('variable_update -> NAME ASSIGNMENT BOOL','variable_update',3,'p_variable_update','parser.py',40),
+  ('double_expression -> double_expression PLUS double_expression','double_expression',3,'p_double_expression','parser.py',47),
+  ('double_expression -> double_expression MINUS double_expression','double_expression',3,'p_double_expression','parser.py',48),
+  ('double_expression -> double_expression MULTIPLY double_expression','double_expression',3,'p_double_expression','parser.py',49),
+  ('double_expression -> double_expression DIVIDE double_expression','double_expression',3,'p_double_expression','parser.py',50),
+  ('double_expression -> DOUBLE','double_expression',1,'p_double_number','parser.py',56),
+  ('int_expression -> int_expression PLUS int_expression','int_expression',3,'p_int_expression','parser.py',62),
+  ('int_expression -> int_expression MINUS int_expression','int_expression',3,'p_int_expression','parser.py',63),
+  ('int_expression -> int_expression MULTIPLY int_expression','int_expression',3,'p_int_expression','parser.py',64),
+  ('int_expression -> int_expression DIVIDE int_expression','int_expression',3,'p_int_expression','parser.py',65),
+  ('int_expression -> INT','int_expression',1,'p_int_number','parser.py',71),
+  ('string_expression -> string_expression PLUS string_expression','string_expression',3,'p_string_expression','parser.py',77),
+  ('string_expression -> STRING','string_expression',1,'p_string','parser.py',83),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',89),
 ]

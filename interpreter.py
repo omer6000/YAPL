@@ -8,22 +8,41 @@ var_env = {}
 
 def eval_exp(tree):
     global var_env
-    print(tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:
         return tree
-    elif tree[0] == "declaration":
+    elif type(tree) is str:
+        return tree
+    elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:
             print("Error variable already declared!!!")
         else:
             typeval = tree[1]
             val = tree[3]
-            var_env[name] = {typeval: eval_exp(val)}
+            var_env[name] = [typeval, eval_exp(val)]
             print(var_env)
+    elif tree[0] == "declaration":
+        name = tree[2]
+        if name in var_env:
+            print("Error variable already declared!!!")
+        else:
+            typeval = tree[1]
+            var_env[name] = []
+    elif tree[0] == "variable":
+        if tree[1] in var_env:
+            return var_env[tree[1]][1]
+        else:
+            print("Error!!!")
     elif tree[0] == "+":
-        return eval_exp(tree[1]) + eval_exp(tree[2])
+        return (eval_exp(tree[1]) + eval_exp(tree[2]))
+    elif tree[0] == "-":
+        return eval_exp(tree[1]) - eval_exp(tree[2])
+    elif tree[0] == "*":
+        return eval_exp(tree[1]) * eval_exp(tree[2])
+    elif tree[0] == "/":
+        return eval_exp(tree[1]) / eval_exp(tree[2])
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:

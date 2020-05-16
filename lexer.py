@@ -17,7 +17,8 @@ tokens = [
     'BOOL_TYPE',
     'CHARACTER_TYPE',
     'STRING_TYPE',
-    'NAME'
+    'NAME',
+    'PRINT'
 ]
 
 t_PLUS = r'\+'

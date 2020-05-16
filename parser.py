@@ -8,28 +8,58 @@ precedence = (
 
 def p_calc(p):
     '''
-    calc : declaration SEMICOLON
+    calc : assignment SEMICOLON
+         | assignment SEMICOLON calc
+         | declaration SEMICOLON
          | declaration SEMICOLON calc
          | variable_update SEMICOLON
          | variable_update SEMICOLON calc
     '''
+        #  | statement SEMICOLON
+        #  | statement SEMICOLON calc
     if len(p) == 3:
         p[0] = [p[1]]
     else:
         p[0] = [p[1]] + p[3]
+    
+# def p_statement(p):
+#     '''
+#     statement : var
+#               | INT
+#               | DOUBLE
+#               | BOOL
+#               | CHAR
+#               | STRING
+#     '''
+#     p[0] = (p[1])
 
+def p_var(p):
+    '''
+    var : NAME
+    '''
+    p[0] = ("variable", p[1])
 
 def p_declaration(p):
     '''
-    declaration : DOUBLE_TYPE NAME ASSIGNMENT double_expression 
-                | INT_TYPE NAME ASSIGNMENT int_expression 
-                | STRING_TYPE NAME ASSIGNMENT string_expression 
-                | CHARACTER_TYPE NAME ASSIGNMENT CHAR 
-                | BOOL_TYPE NAME ASSIGNMENT BOOL 
+    declaration : DOUBLE_TYPE NAME
+                | INT_TYPE NAME
+                | STRING_TYPE NAME
+                | CHARACTER_TYPE NAME
+                | BOOL_TYPE NAME
                 | empty
-
     '''
-    p[0] = ("declaration",p[1], p[2], p[4])
+    p[0] = ("declaration", p[1], p[2])
+
+def p_assignment(p):
+    '''
+    assignment : DOUBLE_TYPE NAME ASSIGNMENT double_expression 
+               | INT_TYPE NAME ASSIGNMENT int_expression 
+               | STRING_TYPE NAME ASSIGNMENT string_expression 
+               | CHARACTER_TYPE NAME ASSIGNMENT CHAR 
+               | BOOL_TYPE NAME ASSIGNMENT BOOL 
+               | empty
+    '''
+    p[0] = ("assignment",p[1], p[2], p[4])
 
 def p_variable_update(p):
     '''
@@ -54,6 +84,7 @@ def p_double_expression(p):
 def p_double_number(p):
     '''
     double_expression : DOUBLE
+    double_expression : var
     '''
     p[0] = p[1]
 
@@ -69,6 +100,7 @@ def p_int_expression(p):
 def p_int_number(p):
     '''
     int_expression : INT
+    int_expression : var
     '''
     p[0] = p[1]
 
@@ -81,6 +113,7 @@ def p_string_expression(p):
 def p_string(p):
     '''
     string_expression : STRING
+    string_expression : var
     '''
     p[0] = p[1]
 
@@ -92,11 +125,3 @@ def p_empty(p):
 
 def p_error(p):
     print("Syntax error in input!")
-# parser = yacc.yacc()
-
-# while True:
-#     try:
-#         s = input('')
-#     except EOFError:
-#         break
-#     parser.parse(s)

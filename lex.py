@@ -5,15 +5,15 @@ import sys
 tokens = [
     'INT',
     'DOUBLE',
-    'STRING',
-    'CHAR',
-    'BOOL',
+    # 'STRING',
+    # 'CHAR',
+    # 'BOOL',
     'PLUS',
     'MINUS',
     'DIVIDE',
     'MULTIPLY',
     'NAME',
-    'EQUALS'
+    'ASSIGNMENT'
 ]
 
 def t_DOUBLE(t):
@@ -31,9 +31,9 @@ def t_STRING(t):
     t.value = t.value[1:-1]
     return t
 
-def t_BOOL(t):
-    r"true|false|0|1"
-    return t
+# def t_BOOL(t):
+#     r"true|false"
+#     return t
 
 def t_CHAR(t):
     r"\'[^\']\'"
@@ -52,7 +52,7 @@ def t_error(t):
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_DIVIDE = r'\/'
-t_EQUALS = r'\='
+t_ASSIGNMENT = r'\='
 t_MULTIPLY = r'\*'
 t_ignore = r' '
 
@@ -71,31 +71,36 @@ precedence = (
 
 def p_calc(p):
     '''
-    calc : expression
+    calc : number
+         | var_assign
          | empty
     '''
     print(p[1])
 
 def p_var_assign(p):
     '''
-    var_assign : NAME EQUALS expression
-               | NAME EQUALS NAME
+    var_assign : NAME ASSIGNMENT number
+               | NAME ASSIGNMENT NAME
     '''
     p[0] = ("=", p[1], p[3])
 
-def p_expression(p):
+def p_computation(p):
     '''
-    expression : expression PLUS expression
-               | expression MINUS expression
+    number : number PLUS number
+           | number MULTIPLY number
+           | number DIVIDE number
+           | number MINUS number
     '''
     p[0] = (p[2], p[1], p[3])
 
-def p_expression_number(p):
+def p_number(p):
     '''
-    expression : INT
-               | DOUBLE
+    number : INT
+           | DOUBLE
     '''
     p[0] = p[1]
+
+# def _
 
 def p_empty(p):
     '''

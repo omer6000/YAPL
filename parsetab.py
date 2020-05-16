@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEBOOL CHAR DIVIDE DOUBLE EQUALS INT MINUS MULTIPLY NAME PLUS STRING\n    calc : expression\n         | empty\n    \n    var_assign : NAME EQUALS expression\n               | NAME EQUALS NAME\n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n    \n    expression : INT\n               | DOUBLE\n    \n    empty :\n    '
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEASSIGNMENT DIVIDE DOUBLE INT MINUS MULTIPLY NAME PLUS\n    calc : number\n         | var_assign\n         | empty\n    \n    var_assign : NAME ASSIGNMENT number\n               | NAME ASSIGNMENT NAME\n    \n    number : number PLUS number\n           | number MULTIPLY number\n           | number DIVIDE number\n           | number MINUS number\n    \n    number : INT\n           | DOUBLE\n    \n    empty :\n    '
     
-_lr_action_items = {'INT':([0,6,7,],[4,4,4,]),'DOUBLE':([0,6,7,],[5,5,5,]),'$end':([0,1,2,3,4,5,8,9,],[-9,0,-1,-2,-7,-8,-5,-6,]),'PLUS':([2,4,5,8,9,],[6,-7,-8,-5,-6,]),'MINUS':([2,4,5,8,9,],[7,-7,-8,-5,-6,]),}
+_lr_action_items = {'INT':([0,8,9,10,11,12,],[5,5,5,5,5,5,]),'DOUBLE':([0,8,9,10,11,12,],[6,6,6,6,6,6,]),'NAME':([0,12,],[7,17,]),'$end':([0,1,2,3,4,5,6,13,14,15,16,17,18,],[-12,0,-1,-2,-3,-10,-11,-6,-7,-8,-9,-5,-4,]),'PLUS':([2,5,6,13,14,15,16,18,],[8,-10,-11,-6,-7,-8,-9,8,]),'MULTIPLY':([2,5,6,13,14,15,16,18,],[9,-10,-11,9,-7,-8,9,9,]),'DIVIDE':([2,5,6,13,14,15,16,18,],[10,-10,-11,10,-7,-8,10,10,]),'MINUS':([2,5,6,13,14,15,16,18,],[11,-10,-11,-6,-7,-8,-9,11,]),'ASSIGNMENT':([7,],[12,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'calc':([0,],[1,]),'expression':([0,6,7,],[2,8,9,]),'empty':([0,],[3,]),}
+_lr_goto_items = {'calc':([0,],[1,]),'number':([0,8,9,10,11,12,],[2,13,14,15,16,18,]),'var_assign':([0,],[3,]),'empty':([0,],[4,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,13 +27,16 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> calc","S'",1,None,None,None),
-  ('calc -> expression','calc',1,'p_calc','lex.py',74),
-  ('calc -> empty','calc',1,'p_calc','lex.py',75),
-  ('var_assign -> NAME EQUALS expression','var_assign',3,'p_var_assign','lex.py',81),
-  ('var_assign -> NAME EQUALS NAME','var_assign',3,'p_var_assign','lex.py',82),
-  ('expression -> expression PLUS expression','expression',3,'p_expression','lex.py',88),
-  ('expression -> expression MINUS expression','expression',3,'p_expression','lex.py',89),
-  ('expression -> INT','expression',1,'p_expression_number','lex.py',95),
-  ('expression -> DOUBLE','expression',1,'p_expression_number','lex.py',96),
-  ('empty -> <empty>','empty',0,'p_empty','lex.py',102),
+  ('calc -> number','calc',1,'p_calc','lex.py',74),
+  ('calc -> var_assign','calc',1,'p_calc','lex.py',75),
+  ('calc -> empty','calc',1,'p_calc','lex.py',76),
+  ('var_assign -> NAME ASSIGNMENT number','var_assign',3,'p_var_assign','lex.py',82),
+  ('var_assign -> NAME ASSIGNMENT NAME','var_assign',3,'p_var_assign','lex.py',83),
+  ('number -> number PLUS number','number',3,'p_computation','lex.py',89),
+  ('number -> number MULTIPLY number','number',3,'p_computation','lex.py',90),
+  ('number -> number DIVIDE number','number',3,'p_computation','lex.py',91),
+  ('number -> number MINUS number','number',3,'p_computation','lex.py',92),
+  ('number -> INT','number',1,'p_number','lex.py',98),
+  ('number -> DOUBLE','number',1,'p_number','lex.py',99),
+  ('empty -> <empty>','empty',0,'p_empty','lex.py',107),
 ]

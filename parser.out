@@ -1,68 +1,67 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    BOOL
-    CHAR
-    DIVIDE
-    MULTIPLY
-    STRING
-
 Grammar
 
 Rule 0     S' -> calc
-Rule 1     calc -> expression
-Rule 2     calc -> empty
-Rule 3     var_assign -> NAME EQUALS expression
-Rule 4     var_assign -> NAME EQUALS NAME
-Rule 5     expression -> expression PLUS expression
-Rule 6     expression -> expression MINUS expression
-Rule 7     expression -> INT
-Rule 8     expression -> DOUBLE
-Rule 9     empty -> <empty>
+Rule 1     calc -> number
+Rule 2     calc -> var_assign
+Rule 3     calc -> empty
+Rule 4     var_assign -> NAME ASSIGNMENT number
+Rule 5     var_assign -> NAME ASSIGNMENT NAME
+Rule 6     number -> number PLUS number
+Rule 7     number -> number MULTIPLY number
+Rule 8     number -> number DIVIDE number
+Rule 9     number -> number MINUS number
+Rule 10    number -> INT
+Rule 11    number -> DOUBLE
+Rule 12    empty -> <empty>
 
 Terminals, with rules where they appear
 
-BOOL                 : 
-CHAR                 : 
-DIVIDE               : 
-DOUBLE               : 8
-EQUALS               : 3 4
-INT                  : 7
-MINUS                : 6
-MULTIPLY             : 
-NAME                 : 3 4 4
-PLUS                 : 5
-STRING               : 
+ASSIGNMENT           : 4 5
+DIVIDE               : 8
+DOUBLE               : 11
+INT                  : 10
+MINUS                : 9
+MULTIPLY             : 7
+NAME                 : 4 5 5
+PLUS                 : 6
 error                : 
 
 Nonterminals, with rules where they appear
 
 calc                 : 0
-empty                : 2
-expression           : 1 3 5 5 6 6
-var_assign           : 
+empty                : 3
+number               : 1 4 6 6 7 7 8 8 9 9
+var_assign           : 2
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . calc
-    (1) calc -> . expression
-    (2) calc -> . empty
-    (5) expression -> . expression PLUS expression
-    (6) expression -> . expression MINUS expression
-    (7) expression -> . INT
-    (8) expression -> . DOUBLE
-    (9) empty -> .
+    (1) calc -> . number
+    (2) calc -> . var_assign
+    (3) calc -> . empty
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
+    (4) var_assign -> . NAME ASSIGNMENT number
+    (5) var_assign -> . NAME ASSIGNMENT NAME
+    (12) empty -> .
 
-    INT             shift and go to state 4
-    DOUBLE          shift and go to state 5
-    $end            reduce using rule 9 (empty -> .)
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
+    NAME            shift and go to state 7
+    $end            reduce using rule 12 (empty -> .)
 
     calc                           shift and go to state 1
-    expression                     shift and go to state 2
-    empty                          shift and go to state 3
+    number                         shift and go to state 2
+    var_assign                     shift and go to state 3
+    empty                          shift and go to state 4
 
 state 1
 
@@ -72,90 +71,238 @@ state 1
 
 state 2
 
-    (1) calc -> expression .
-    (5) expression -> expression . PLUS expression
-    (6) expression -> expression . MINUS expression
+    (1) calc -> number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
 
-    $end            reduce using rule 1 (calc -> expression .)
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
+    $end            reduce using rule 1 (calc -> number .)
+    PLUS            shift and go to state 8
+    MULTIPLY        shift and go to state 9
+    DIVIDE          shift and go to state 10
+    MINUS           shift and go to state 11
 
 
 state 3
 
-    (2) calc -> empty .
+    (2) calc -> var_assign .
 
-    $end            reduce using rule 2 (calc -> empty .)
+    $end            reduce using rule 2 (calc -> var_assign .)
 
 
 state 4
 
-    (7) expression -> INT .
+    (3) calc -> empty .
 
-    PLUS            reduce using rule 7 (expression -> INT .)
-    MINUS           reduce using rule 7 (expression -> INT .)
-    $end            reduce using rule 7 (expression -> INT .)
+    $end            reduce using rule 3 (calc -> empty .)
 
 
 state 5
 
-    (8) expression -> DOUBLE .
+    (10) number -> INT .
 
-    PLUS            reduce using rule 8 (expression -> DOUBLE .)
-    MINUS           reduce using rule 8 (expression -> DOUBLE .)
-    $end            reduce using rule 8 (expression -> DOUBLE .)
+    PLUS            reduce using rule 10 (number -> INT .)
+    MULTIPLY        reduce using rule 10 (number -> INT .)
+    DIVIDE          reduce using rule 10 (number -> INT .)
+    MINUS           reduce using rule 10 (number -> INT .)
+    $end            reduce using rule 10 (number -> INT .)
 
 
 state 6
 
-    (5) expression -> expression PLUS . expression
-    (5) expression -> . expression PLUS expression
-    (6) expression -> . expression MINUS expression
-    (7) expression -> . INT
-    (8) expression -> . DOUBLE
+    (11) number -> DOUBLE .
 
-    INT             shift and go to state 4
-    DOUBLE          shift and go to state 5
+    PLUS            reduce using rule 11 (number -> DOUBLE .)
+    MULTIPLY        reduce using rule 11 (number -> DOUBLE .)
+    DIVIDE          reduce using rule 11 (number -> DOUBLE .)
+    MINUS           reduce using rule 11 (number -> DOUBLE .)
+    $end            reduce using rule 11 (number -> DOUBLE .)
 
-    expression                     shift and go to state 8
 
 state 7
 
-    (6) expression -> expression MINUS . expression
-    (5) expression -> . expression PLUS expression
-    (6) expression -> . expression MINUS expression
-    (7) expression -> . INT
-    (8) expression -> . DOUBLE
+    (4) var_assign -> NAME . ASSIGNMENT number
+    (5) var_assign -> NAME . ASSIGNMENT NAME
 
-    INT             shift and go to state 4
-    DOUBLE          shift and go to state 5
+    ASSIGNMENT      shift and go to state 12
 
-    expression                     shift and go to state 9
 
 state 8
 
-    (5) expression -> expression PLUS expression .
-    (5) expression -> expression . PLUS expression
-    (6) expression -> expression . MINUS expression
+    (6) number -> number PLUS . number
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
 
-    PLUS            reduce using rule 5 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 5 (expression -> expression PLUS expression .)
-    $end            reduce using rule 5 (expression -> expression PLUS expression .)
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
 
-  ! PLUS            [ shift and go to state 6 ]
-  ! MINUS           [ shift and go to state 7 ]
-
+    number                         shift and go to state 13
 
 state 9
 
-    (6) expression -> expression MINUS expression .
-    (5) expression -> expression . PLUS expression
-    (6) expression -> expression . MINUS expression
+    (7) number -> number MULTIPLY . number
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
 
-    PLUS            reduce using rule 6 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 6 (expression -> expression MINUS expression .)
-    $end            reduce using rule 6 (expression -> expression MINUS expression .)
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
 
-  ! PLUS            [ shift and go to state 6 ]
-  ! MINUS           [ shift and go to state 7 ]
+    number                         shift and go to state 14
+
+state 10
+
+    (8) number -> number DIVIDE . number
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
+
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
+
+    number                         shift and go to state 15
+
+state 11
+
+    (9) number -> number MINUS . number
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
+
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
+
+    number                         shift and go to state 16
+
+state 12
+
+    (4) var_assign -> NAME ASSIGNMENT . number
+    (5) var_assign -> NAME ASSIGNMENT . NAME
+    (6) number -> . number PLUS number
+    (7) number -> . number MULTIPLY number
+    (8) number -> . number DIVIDE number
+    (9) number -> . number MINUS number
+    (10) number -> . INT
+    (11) number -> . DOUBLE
+
+    NAME            shift and go to state 17
+    INT             shift and go to state 5
+    DOUBLE          shift and go to state 6
+
+    number                         shift and go to state 18
+
+state 13
+
+    (6) number -> number PLUS number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
+
+    PLUS            reduce using rule 6 (number -> number PLUS number .)
+    MINUS           reduce using rule 6 (number -> number PLUS number .)
+    $end            reduce using rule 6 (number -> number PLUS number .)
+    MULTIPLY        shift and go to state 9
+    DIVIDE          shift and go to state 10
+
+  ! MULTIPLY        [ reduce using rule 6 (number -> number PLUS number .) ]
+  ! DIVIDE          [ reduce using rule 6 (number -> number PLUS number .) ]
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 11 ]
+
+
+state 14
+
+    (7) number -> number MULTIPLY number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
+
+    PLUS            reduce using rule 7 (number -> number MULTIPLY number .)
+    MULTIPLY        reduce using rule 7 (number -> number MULTIPLY number .)
+    DIVIDE          reduce using rule 7 (number -> number MULTIPLY number .)
+    MINUS           reduce using rule 7 (number -> number MULTIPLY number .)
+    $end            reduce using rule 7 (number -> number MULTIPLY number .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MULTIPLY        [ shift and go to state 9 ]
+  ! DIVIDE          [ shift and go to state 10 ]
+  ! MINUS           [ shift and go to state 11 ]
+
+
+state 15
+
+    (8) number -> number DIVIDE number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
+
+    PLUS            reduce using rule 8 (number -> number DIVIDE number .)
+    MULTIPLY        reduce using rule 8 (number -> number DIVIDE number .)
+    DIVIDE          reduce using rule 8 (number -> number DIVIDE number .)
+    MINUS           reduce using rule 8 (number -> number DIVIDE number .)
+    $end            reduce using rule 8 (number -> number DIVIDE number .)
+
+  ! PLUS            [ shift and go to state 8 ]
+  ! MULTIPLY        [ shift and go to state 9 ]
+  ! DIVIDE          [ shift and go to state 10 ]
+  ! MINUS           [ shift and go to state 11 ]
+
+
+state 16
+
+    (9) number -> number MINUS number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
+
+    PLUS            reduce using rule 9 (number -> number MINUS number .)
+    MINUS           reduce using rule 9 (number -> number MINUS number .)
+    $end            reduce using rule 9 (number -> number MINUS number .)
+    MULTIPLY        shift and go to state 9
+    DIVIDE          shift and go to state 10
+
+  ! MULTIPLY        [ reduce using rule 9 (number -> number MINUS number .) ]
+  ! DIVIDE          [ reduce using rule 9 (number -> number MINUS number .) ]
+  ! PLUS            [ shift and go to state 8 ]
+  ! MINUS           [ shift and go to state 11 ]
+
+
+state 17
+
+    (5) var_assign -> NAME ASSIGNMENT NAME .
+
+    $end            reduce using rule 5 (var_assign -> NAME ASSIGNMENT NAME .)
+
+
+state 18
+
+    (4) var_assign -> NAME ASSIGNMENT number .
+    (6) number -> number . PLUS number
+    (7) number -> number . MULTIPLY number
+    (8) number -> number . DIVIDE number
+    (9) number -> number . MINUS number
+
+    $end            reduce using rule 4 (var_assign -> NAME ASSIGNMENT number .)
+    PLUS            shift and go to state 8
+    MULTIPLY        shift and go to state 9
+    DIVIDE          shift and go to state 10
+    MINUS           shift and go to state 11
 

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BOOL CHAR DIVIDE DOUBLE INT MINUS NAME PLUS STRING\n    calc : expression\n         | empty\n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n    \n    expression : INT\n               | DOUBLE\n    \n    empty :\n    '
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEBOOL CHAR DIVIDE DOUBLE EQUALS INT MINUS MULTIPLY NAME PLUS STRING\n    calc : expression\n         | empty\n    \n    var_assign : NAME EQUALS expression\n               | NAME EQUALS NAME\n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n    \n    expression : INT\n               | DOUBLE\n    \n    empty :\n    '
     
-_lr_action_items = {'INT':([0,6,7,],[4,4,4,]),'DOUBLE':([0,6,7,],[5,5,5,]),'$end':([0,1,2,3,4,5,8,9,],[-7,0,-1,-2,-5,-6,-3,-4,]),'PLUS':([2,4,5,8,9,],[6,-5,-6,6,6,]),'MINUS':([2,4,5,8,9,],[7,-5,-6,7,7,]),}
+_lr_action_items = {'INT':([0,6,7,],[4,4,4,]),'DOUBLE':([0,6,7,],[5,5,5,]),'$end':([0,1,2,3,4,5,8,9,],[-9,0,-1,-2,-7,-8,-5,-6,]),'PLUS':([2,4,5,8,9,],[6,-7,-8,-5,-6,]),'MINUS':([2,4,5,8,9,],[7,-7,-8,-5,-6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,11 +27,13 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> calc","S'",1,None,None,None),
-  ('calc -> expression','calc',1,'p_calc','lex.py',65),
-  ('calc -> empty','calc',1,'p_calc','lex.py',66),
-  ('expression -> expression PLUS expression','expression',3,'p_expression','lex.py',78),
-  ('expression -> expression MINUS expression','expression',3,'p_expression','lex.py',79),
-  ('expression -> INT','expression',1,'p_expression_number','lex.py',84),
-  ('expression -> DOUBLE','expression',1,'p_expression_number','lex.py',85),
-  ('empty -> <empty>','empty',0,'p_empty','lex.py',91),
+  ('calc -> expression','calc',1,'p_calc','lex.py',74),
+  ('calc -> empty','calc',1,'p_calc','lex.py',75),
+  ('var_assign -> NAME EQUALS expression','var_assign',3,'p_var_assign','lex.py',81),
+  ('var_assign -> NAME EQUALS NAME','var_assign',3,'p_var_assign','lex.py',82),
+  ('expression -> expression PLUS expression','expression',3,'p_expression','lex.py',88),
+  ('expression -> expression MINUS expression','expression',3,'p_expression','lex.py',89),
+  ('expression -> INT','expression',1,'p_expression_number','lex.py',95),
+  ('expression -> DOUBLE','expression',1,'p_expression_number','lex.py',96),
+  ('empty -> <empty>','empty',0,'p_empty','lex.py',102),
 ]

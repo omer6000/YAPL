@@ -11,7 +11,9 @@ tokens = [
     'PLUS',
     'MINUS',
     'DIVIDE',
-    'NAME'
+    'MULTIPLY',
+    'NAME',
+    'EQUALS'
 ]
 
 def t_DOUBLE(t):
@@ -50,6 +52,8 @@ def t_error(t):
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_DIVIDE = r'\/'
+t_EQUALS = r'\='
+t_MULTIPLY = r'\*'
 t_ignore = r' '
 
 lexer = lex.lex()
@@ -60,6 +64,11 @@ lexer = lex.lex()
 #         break
 #     print(tok)
 
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'MULTIPLY', 'DIVIDE')
+)
+
 def p_calc(p):
     '''
     calc : expression
@@ -67,11 +76,12 @@ def p_calc(p):
     '''
     print(p[1])
 
-# def p_expression(p):
-#     '''
-#     expression : INT
-#                | DOUBLE
-#     '''
+def p_var_assign(p):
+    '''
+    var_assign : NAME EQUALS expression
+               | NAME EQUALS NAME
+    '''
+    p[0] = ("=", p[1], p[3])
 
 def p_expression(p):
     '''

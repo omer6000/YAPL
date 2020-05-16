@@ -14,6 +14,8 @@ def eval_exp(tree):
         return tree
     elif type(tree) is str:
         return tree
+    elif (type(tree) is tuple) and tree[0] == "print":
+        print(eval_exp(tree[1]))
     elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:
@@ -22,7 +24,6 @@ def eval_exp(tree):
             typeval = tree[1]
             val = tree[3]
             var_env[name] = [typeval, eval_exp(val)]
-            print(var_env)
     elif tree[0] == "declaration":
         name = tree[2]
         if name in var_env:

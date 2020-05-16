@@ -14,6 +14,8 @@ def p_calc(p):
          | declaration SEMICOLON calc
          | variable_update SEMICOLON
          | variable_update SEMICOLON calc
+         | printstatement SEMICOLON
+         | printstatement SEMICOLON calc
     '''
         #  | statement SEMICOLON
         #  | statement SEMICOLON calc
@@ -71,6 +73,27 @@ def p_variable_update(p):
                     
     '''
     p[0] = ("variable_update", p[1], p[3])
+
+def p_print(p):
+    '''
+    printstatement : PRINT LB expression RB
+    '''
+    p[0] = ("print", p[3])
+
+def p_expression(p):
+    '''
+    expression : var
+               | INT
+               | DOUBLE
+               | BOOL
+               | CHAR
+               | STRING
+               | double_expression
+               | int_expression
+               | string_expression
+               | expression COMMA expression
+    '''
+    p[0] = p[1]
 
 def p_double_expression(p):
     '''

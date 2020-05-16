@@ -18,7 +18,10 @@ tokens = [
     'CHARACTER_TYPE',
     'STRING_TYPE',
     'NAME',
-    'PRINT'
+    'PRINT',
+    'LB',
+    'RB',
+    'COMMA'
 ]
 
 t_PLUS = r'\+'
@@ -27,7 +30,14 @@ t_DIVIDE = r'\/'
 t_ASSIGNMENT = r'\='
 t_MULTIPLY = r'\*'
 t_SEMICOLON = r'\;'
+t_LB = r'\('
+t_RB = r'\)'
+t_COMMA = r'\,'
 t_ignore = ' \t\v\r'
+
+def t_PRINT(t):
+    r'print'
+    return t
 
 def t_newline(t):
     r'\n'

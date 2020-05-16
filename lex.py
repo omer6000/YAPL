@@ -5,9 +5,9 @@ import sys
 tokens = [
     'INT',
     'DOUBLE',
-    # 'STRING',
-    # 'CHAR',
-    # 'BOOL',
+    'STRING',
+    'CHAR',
+    'BOOL',
     'PLUS',
     'MINUS',
     'DIVIDE',
@@ -99,8 +99,6 @@ def p_number(p):
            | DOUBLE
     '''
     p[0] = p[1]
-
-# def _
 
 def p_empty(p):
     '''

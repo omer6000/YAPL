@@ -8,7 +8,6 @@ var_env = {}
 
 def eval_exp(tree):
     global var_env
-    print("hello",tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:
@@ -20,6 +19,8 @@ def eval_exp(tree):
             print(tree[1][0],"", end="")
             arr = tree[1][1:]
             eval_exp(("print", arr))
+    elif tree[0] == "dowhile":
+        print(tree)
     elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:

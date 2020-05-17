@@ -20,6 +20,10 @@ def p_calc(p):
          | printoutput SEMICOLON calc
          | dowhile_expression SEMICOLON
          | dowhile_expression SEMICOLON calc
+         | increment SEMICOLON
+         | increment SEMICOLON calc
+         | decrement SEMICOLON
+         | decrement SEMICOLON calc
     '''
     if len(p) == 3:
         p[0] = [p[1]]
@@ -95,7 +99,7 @@ def p_variable_update(p):
 def p_double_number(p):
     '''
     double_expression : DOUBLE
-    double_expression : var
+                      | var
     '''
     p[0] = p[1]
 
@@ -119,7 +123,7 @@ def p_double_bracket(p):
 def p_int_number(p):
     '''
     int_expression : INT
-    int_expression : var
+                   | var
     '''
     p[0] = p[1]
 
@@ -174,7 +178,7 @@ def p_bool_bracket(p):
 def p_string(p):
     '''
     string_expression : STRING
-    string_expression : var
+                      | var
     '''
     p[0] = p[1]
 
@@ -208,12 +212,41 @@ def p_insidewhile(p):
     else:
         p[0] = [p[1]] + p[2]
 
+def p_comparison_operators(p):
+    '''
+    operator : LESS
+             | LESSEQUAL
+             | GREATER
+             | GREATEREQUAL
+             | EQUALITY
+    '''
+    p[0] = p[1]
+
+def p_loop_condition(p):
+    '''
+    condition : int_expression operator int_expression
+              | LB condition RB
+    '''
+    p[0] = ("dowhole condition" ,p[2], p[1], p[3])
+
 def p_dowhile(p):
     '''
-    dowhile_expression : DO LP insidewhile RP WHILE LB bool_expression RB
-                       | DO LP dowhile_expression RP WHILE LB bool_expression RB
+    dowhile_expression : DO LP insidewhile RP WHILE LB condition RB
+                       | DO LP dowhile_expression RP WHILE LB condition RB
     '''
     p[0] = ("dowhile" , p[3], p[7])
+
+def p_increment(p):
+    '''
+    increment : int_expression INCREMENT
+    '''
+    p[0] = ("increment", p[1])
+
+def p_decrement(p):
+    '''
+    decrement : int_expression DECREMENT
+    '''
+    p[0] = ("decrement", p[1])
 
 def p_error(p):
     print("Syntax error in input!")

@@ -1,6 +1,6 @@
-int x = 5;
+int i = 5;
 do {
     int a = 3;
     int c = 5;
     int w = 3;
-} while(true);
+} while(a > w);

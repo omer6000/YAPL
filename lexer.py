@@ -34,6 +34,7 @@ tokens = [
     'GREATEREQUAL',
     'NOT',
     'EQUALITY',
+    'NOTEQUAL',
     'DO',
     'WHILE',
     'LP',
@@ -58,12 +59,39 @@ t_LP = "\{"
 t_RP = "\}"
 t_ignore = ' \t\v\r'
 
+def t_DOUBLE_TYPE(t):
+    r'double'
+    return t
+
+def t_INT_TYPE(t):
+    r'int'
+    return t
+
+def t_BOOL_TYPE(t):
+    r'bool'
+    return t
+
+def t_CHARACTER_TYPE(t):
+    r'char'
+    return t
+
+def t_STRING_TYPE(t):
+    r'string'
+    return t
+
+def t_PRINT(t):
+    r'print'
+    return t
+
 def t_newline(t):
     r'\n'
     t.lexer.lineno += 1
 
 def t_EQUALITY(t):
     r'\=\='
+    return t
+def t_NOTEQUAL(t):
+    r'\!\='
     return t
 
 def t_DO(t):
@@ -130,30 +158,6 @@ def t_BOOL(t):
     r"true|false"
     return t
 
-def t_DOUBLE_TYPE(t):
-    r'double'
-    return t
-
-def t_INT_TYPE(t):
-    r'int'
-    return t
-
-def t_BOOL_TYPE(t):
-    r'bool'
-    return t
-
-def t_CHARACTER_TYPE(t):
-    r'char'
-    return t
-
-def t_STRING_TYPE(t):
-    r'string'
-    return t
-
-def t_PRINT(t):
-    r'print'
-    return t
-
 def t_NAME(t):
     r'[a-zA-Z_][_a-zA-Z0-9.]*'
     t.type = "NAME"
@@ -164,10 +168,4 @@ def t_error(t):
     t.lexer.skip(1)
 
 lexer = lex.lex()
-# # lexer.input("\'h\' 12.54 35 \"how are you\" true false x")
-# # while True:
-# #     tok = lexer.token()
-# #     if not tok:
-# #         break
-# #     print(tok)
 

@@ -102,6 +102,7 @@ def p_variable_update(p):
 def p_double_number(p):
     '''
     double_expression : DOUBLE
+                      | INT
                       | var
     '''
     p[0] = p[1]
@@ -114,8 +115,12 @@ def p_double_expression(p):
                       | double_expression DIVIDE double_expression
                       | double_expression MOD double_expression
                       | double_expression POWER double_expression
+                      | MINUS double_expression
     '''
-    p[0] = (p[2], p[1], p[3])
+    if len(p) == 4:
+        p[0] = (p[2], p[1], p[3])
+    else:
+        p[0] = (p[1], 0, p[2])
 
 def p_double_bracket(p):
     '''
@@ -138,8 +143,12 @@ def p_int_expression(p):
                    | int_expression DIVIDE int_expression
                    | int_expression MOD int_expression
                    | int_expression POWER int_expression
+                   | MINUS int_expression
     '''
-    p[0] = (p[2], p[1], p[3])
+    if len(p) == 4:
+        p[0] = (p[2], p[1], p[3])
+    else:
+        p[0] = (p[1], 0, p[2])
 
 def p_int_bracket(p):
     '''
@@ -163,6 +172,7 @@ def p_bool_expression(p):
                     | expression GREATER expression
                     | expression GREATEREQUAL expression
                     | expression EQUALITY expression
+                    | expression NOTEQUAL expression
     '''
     p[0] = (p[2], p[1], p[3])
 
@@ -190,6 +200,12 @@ def p_string_expression(p):
     string_expression : string_expression PLUS string_expression
     '''
     p[0] = (p[2], p[1], p[3])
+
+def p_string_bracket(p):
+    '''
+    string_expression : LB string_expression RB
+    '''
+    p[0] = p[2]
 
 def p_code(p):
     '''
@@ -219,6 +235,7 @@ def p_comparison_operators(p):
              | GREATER
              | GREATEREQUAL
              | EQUALITY
+             | NOTEQUAL
     '''
     p[0] = p[1]
 
@@ -229,12 +246,30 @@ def p_loop_condition(p):
     '''
     p[0] = ("dowhole condition" ,p[2], p[1], p[3])
 
+# def p_dowhile(p):
+#     '''
+#     dowhile_inside : DO LP insidewhile RP WHILE LB condition RB
+#     '''
+#     p[0] = ("dowhile" , p[3], p[7])
+
+# def p_dowhile2(p):
+#     '''
+#     dowhile_inside : DO LP insidewhile RP WHILE LB condition RB
+#                    | DO LP dowhile_inside RP WHILE LB condition RB
+#     '''
+#     p[0] = ("dowhile" , p[3], p[7])
+
 def p_dowhile(p):
     '''
     dowhile_expression : DO LP insidewhile RP WHILE LB condition RB
-                       | DO LP dowhile_expression RP WHILE LB condition RB
     '''
-    p[0] = ("dowhile" , p[3], p[7])
+    p[0] = ("dowhile", p[3], p[7])
+
+# def p_dowhile2(p):
+#     '''
+#     dowhile_expression : DO LP insidewhile RP WHILE LB condition RB
+#     '''
+
 
 def p_struct_code(p):
     '''

@@ -33,7 +33,8 @@ def eval_exp(tree):
             for var in tree[2]:
                 var_struct[name].append((var[1], var[2]))
     elif tree[0] == "dowhile":
-        # print(tree)
+        pass
+        # print(tree[1])
         pass
         while True:
             code_inside = tree[1]
@@ -49,7 +50,7 @@ def eval_exp(tree):
     elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:
-            print("Error variable already declared!!!")
+            print("RedeclarationError")
             sys.exit()
         else:
             typeval = tree[1]
@@ -69,7 +70,7 @@ def eval_exp(tree):
         elif typeval in var_struct:
             var_env[name] = {}
         elif name in var_env:
-            print("Error variable already declared!!!")
+            print("RedeclarationError")
             sys.exit()
         else:
             var_env[name] = [typeval, ""]
@@ -127,7 +128,9 @@ def eval_exp(tree):
     elif tree[0] == "<=":
         return eval_exp(tree[1]) <= eval_exp(tree[2])
     elif tree[0] == "==":
-        return eval_exp(tree[1]) <= eval_exp(tree[2])
+        return eval_exp(tree[1]) == eval_exp(tree[2])
+    elif tree[0] == "!=":
+        return eval_exp(tree[1]) != eval_exp(tree[2])
     elif tree[0] == "&&":
         val_left = None
         val_right = None

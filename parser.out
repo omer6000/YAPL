@@ -83,11 +83,10 @@ Rule 72    empty -> <empty>
 Rule 73    code -> assignment SEMICOLON
 Rule 74    code -> declaration SEMICOLON
 Rule 75    code -> variable_update SEMICOLON
-Rule 76    code -> assignment SEMICOLON code
-Rule 77    code -> declaration SEMICOLON code
-Rule 78    code -> variable_update SEMICOLON code
-Rule 79    dowhile_expression -> DO LP code RP WHILE LB bool_expression RB
-Rule 80    dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB
+Rule 76    insidewhile -> code
+Rule 77    insidewhile -> code insidewhile
+Rule 78    dowhile_expression -> DO LP insidewhile RP WHILE LB bool_expression RB
+Rule 79    dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB
 
 Terminals, with rules where they appear
 
@@ -100,7 +99,7 @@ CHARACTER_TYPE       : 26 32
 COMMA                : 16
 DECREMENT            : 
 DIVIDE               : 45 54
-DO                   : 79 80
+DO                   : 78 79
 DOUBLE               : 40
 DOUBLE_TYPE          : 23 29
 EQUALITY             : 66
@@ -109,10 +108,10 @@ GREATEREQUAL         : 65
 INCREMENT            : 
 INT                  : 49
 INT_TYPE             : 24 30
-LB                   : 14 48 57 68 79 80
+LB                   : 14 48 57 68 78 79
 LESS                 : 62
 LESSEQUAL            : 63
-LP                   : 79 80
+LP                   : 78 79
 MINUS                : 43 52
 MOD                  : 46 55
 MULTIPLY             : 44 53
@@ -122,31 +121,32 @@ OR                   : 60
 PLUS                 : 42 51 71
 POWER                : 47 56
 PRINT                : 14
-RB                   : 14 48 57 68 79 80
-RP                   : 79 80
-SEMICOLON            : 1 2 3 4 5 6 7 8 9 10 11 12 73 74 75 76 77 78
+RB                   : 14 48 57 68 78 79
+RP                   : 78 79
+SEMICOLON            : 1 2 3 4 5 6 7 8 9 10 11 12 73 74 75
 STRING               : 69
 STRING_TYPE          : 25 31
-WHILE                : 79 80
+WHILE                : 78 79
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment           : 1 2 73 76
-bool_expression      : 22 33 39 60 60 61 61 67 68 79 80
+assignment           : 1 2 73
+bool_expression      : 22 33 39 60 60 61 61 67 68 78 79
 calc                 : 2 4 6 8 10 12 0
-code                 : 76 77 78 79
-declaration          : 3 4 74 77
+code                 : 76 77
+declaration          : 3 4 74
 double_expression    : 19 29 35 42 42 43 43 44 44 45 45 46 46 47 47 48
-dowhile_expression   : 11 12 80
+dowhile_expression   : 11 12 79
 empty                : 28 34
 expression           : 7 8 15 16 62 62 63 63 64 64 65 65 66 66
+insidewhile          : 77 78
 int_expression       : 20 30 36 51 51 52 52 53 53 54 54 55 55 56 56 57
 printexpression      : 14 16
 printoutput          : 9 10
 string_expression    : 21 31 37 71 71
 var                  : 17 41 50 59 70
-variable_update      : 5 6 75 78
+variable_update      : 5 6 75
 
 Parsing method: LALR
 
@@ -189,8 +189,8 @@ state 0
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -702,8 +702,8 @@ state 22
 
 state 23
 
-    (79) dowhile_expression -> DO . LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> DO . LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> DO . LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> DO . LP dowhile_expression RP WHILE LB bool_expression RB
 
     LP              shift and go to state 68
 
@@ -884,8 +884,8 @@ state 29
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -993,8 +993,8 @@ state 30
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -1102,8 +1102,8 @@ state 31
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -1211,8 +1211,8 @@ state 32
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -1615,8 +1615,8 @@ state 38
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -1724,8 +1724,8 @@ state 39
     (21) expression -> . string_expression
     (22) expression -> . bool_expression
     (14) printoutput -> . PRINT LB printexpression RB
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (72) empty -> .
     (13) var -> . NAME
     (40) double_expression -> . DOUBLE
@@ -2536,16 +2536,15 @@ state 67
 
 state 68
 
-    (79) dowhile_expression -> DO LP . code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> DO LP . dowhile_expression RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> DO LP . insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> DO LP . dowhile_expression RP WHILE LB bool_expression RB
+    (76) insidewhile -> . code
+    (77) insidewhile -> . code insidewhile
+    (78) dowhile_expression -> . DO LP insidewhile RP WHILE LB bool_expression RB
+    (79) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (73) code -> . assignment SEMICOLON
     (74) code -> . declaration SEMICOLON
     (75) code -> . variable_update SEMICOLON
-    (76) code -> . assignment SEMICOLON code
-    (77) code -> . declaration SEMICOLON code
-    (78) code -> . variable_update SEMICOLON code
-    (79) dowhile_expression -> . DO LP code RP WHILE LB bool_expression RB
-    (80) dowhile_expression -> . DO LP dowhile_expression RP WHILE LB bool_expression RB
     (29) assignment -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression
     (30) assignment -> . INT_TYPE NAME ASSIGNMENT int_expression
     (31) assignment -> . STRING_TYPE NAME ASSIGNMENT string_expression
@@ -2571,14 +2570,15 @@ state 68
     STRING_TYPE     shift and go to state 13
     CHARACTER_TYPE  shift and go to state 15
     BOOL_TYPE       shift and go to state 17
-    NAME            shift and go to state 124
+    NAME            shift and go to state 125
     SEMICOLON       reduce using rule 72 (empty -> .)
 
-    code                           shift and go to state 119
+    insidewhile                    shift and go to state 119
     dowhile_expression             shift and go to state 120
-    assignment                     shift and go to state 121
-    declaration                    shift and go to state 122
-    variable_update                shift and go to state 123
+    code                           shift and go to state 121
+    assignment                     shift and go to state 122
+    declaration                    shift and go to state 123
+    variable_update                shift and go to state 124
     empty                          shift and go to state 19
 
 state 69
@@ -2753,7 +2753,7 @@ state 71
     bool_expression                shift and go to state 64
     double_expression              shift and go to state 62
     int_expression                 shift and go to state 63
-    var                            shift and go to state 125
+    var                            shift and go to state 126
     expression                     shift and go to state 66
     string_expression              shift and go to state 14
 
@@ -2977,7 +2977,7 @@ state 83
     LB              shift and go to state 92
     NAME            shift and go to state 67
 
-    double_expression              shift and go to state 126
+    double_expression              shift and go to state 127
     var                            shift and go to state 91
 
 state 84
@@ -3235,7 +3235,7 @@ state 92
     LB              shift and go to state 92
     NAME            shift and go to state 67
 
-    double_expression              shift and go to state 127
+    double_expression              shift and go to state 128
     var                            shift and go to state 91
 
 state 93
@@ -3443,7 +3443,7 @@ state 98
     LB              shift and go to state 101
     NAME            shift and go to state 67
 
-    int_expression                 shift and go to state 128
+    int_expression                 shift and go to state 129
     var                            shift and go to state 100
 
 state 99
@@ -3521,7 +3521,7 @@ state 101
     LB              shift and go to state 101
     NAME            shift and go to state 67
 
-    int_expression                 shift and go to state 129
+    int_expression                 shift and go to state 130
     var                            shift and go to state 100
 
 state 102
@@ -3722,7 +3722,7 @@ state 107
     STRING          shift and go to state 26
     NAME            shift and go to state 67
 
-    string_expression              shift and go to state 130
+    string_expression              shift and go to state 131
     var                            shift and go to state 109
 
 state 108
@@ -3766,7 +3766,7 @@ state 110
 
     (32) assignment -> CHARACTER_TYPE NAME ASSIGNMENT . CHAR
 
-    CHAR            shift and go to state 131
+    CHAR            shift and go to state 132
 
 
 state 111
@@ -3821,7 +3821,7 @@ state 111
     INT             shift and go to state 25
     STRING          shift and go to state 26
 
-    bool_expression                shift and go to state 132
+    bool_expression                shift and go to state 133
     var                            shift and go to state 70
     expression                     shift and go to state 66
     double_expression              shift and go to state 10
@@ -3900,7 +3900,7 @@ state 114
 
     (14) printoutput -> PRINT LB printexpression . RB
 
-    RB              shift and go to state 133
+    RB              shift and go to state 134
 
 
 state 115
@@ -3914,7 +3914,7 @@ state 115
     (66) bool_expression -> expression . EQUALITY expression
 
     RB              reduce using rule 15 (printexpression -> expression .)
-    COMMA           shift and go to state 134
+    COMMA           shift and go to state 135
     LESS            shift and go to state 33
     LESSEQUAL       shift and go to state 34
     GREATER         shift and go to state 35
@@ -3984,43 +3984,84 @@ state 118
 
 state 119
 
-    (79) dowhile_expression -> DO LP code . RP WHILE LB bool_expression RB
-
-    RP              shift and go to state 135
-
-
-state 120
-
-    (80) dowhile_expression -> DO LP dowhile_expression . RP WHILE LB bool_expression RB
+    (78) dowhile_expression -> DO LP insidewhile . RP WHILE LB bool_expression RB
 
     RP              shift and go to state 136
 
 
+state 120
+
+    (79) dowhile_expression -> DO LP dowhile_expression . RP WHILE LB bool_expression RB
+
+    RP              shift and go to state 137
+
+
 state 121
 
-    (73) code -> assignment . SEMICOLON
-    (76) code -> assignment . SEMICOLON code
+    (76) insidewhile -> code .
+    (77) insidewhile -> code . insidewhile
+    (76) insidewhile -> . code
+    (77) insidewhile -> . code insidewhile
+    (73) code -> . assignment SEMICOLON
+    (74) code -> . declaration SEMICOLON
+    (75) code -> . variable_update SEMICOLON
+    (29) assignment -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression
+    (30) assignment -> . INT_TYPE NAME ASSIGNMENT int_expression
+    (31) assignment -> . STRING_TYPE NAME ASSIGNMENT string_expression
+    (32) assignment -> . CHARACTER_TYPE NAME ASSIGNMENT CHAR
+    (33) assignment -> . BOOL_TYPE NAME ASSIGNMENT bool_expression
+    (34) assignment -> . empty
+    (23) declaration -> . DOUBLE_TYPE NAME
+    (24) declaration -> . INT_TYPE NAME
+    (25) declaration -> . STRING_TYPE NAME
+    (26) declaration -> . CHARACTER_TYPE NAME
+    (27) declaration -> . BOOL_TYPE NAME
+    (28) declaration -> . empty
+    (35) variable_update -> . NAME ASSIGNMENT double_expression
+    (36) variable_update -> . NAME ASSIGNMENT int_expression
+    (37) variable_update -> . NAME ASSIGNMENT string_expression
+    (38) variable_update -> . NAME ASSIGNMENT CHAR
+    (39) variable_update -> . NAME ASSIGNMENT bool_expression
+    (72) empty -> .
 
-    SEMICOLON       shift and go to state 137
+    RP              reduce using rule 76 (insidewhile -> code .)
+    DOUBLE_TYPE     shift and go to state 8
+    INT_TYPE        shift and go to state 11
+    STRING_TYPE     shift and go to state 13
+    CHARACTER_TYPE  shift and go to state 15
+    BOOL_TYPE       shift and go to state 17
+    NAME            shift and go to state 125
+    SEMICOLON       reduce using rule 72 (empty -> .)
 
+    code                           shift and go to state 121
+    insidewhile                    shift and go to state 138
+    assignment                     shift and go to state 122
+    declaration                    shift and go to state 123
+    variable_update                shift and go to state 124
+    empty                          shift and go to state 19
 
 state 122
 
-    (74) code -> declaration . SEMICOLON
-    (77) code -> declaration . SEMICOLON code
-
-    SEMICOLON       shift and go to state 138
-
-
-state 123
-
-    (75) code -> variable_update . SEMICOLON
-    (78) code -> variable_update . SEMICOLON code
+    (73) code -> assignment . SEMICOLON
 
     SEMICOLON       shift and go to state 139
 
 
+state 123
+
+    (74) code -> declaration . SEMICOLON
+
+    SEMICOLON       shift and go to state 140
+
+
 state 124
+
+    (75) code -> variable_update . SEMICOLON
+
+    SEMICOLON       shift and go to state 141
+
+
+state 125
 
     (35) variable_update -> NAME . ASSIGNMENT double_expression
     (36) variable_update -> NAME . ASSIGNMENT int_expression
@@ -4031,7 +4072,7 @@ state 124
     ASSIGNMENT      shift and go to state 41
 
 
-state 125
+state 126
 
     (59) bool_expression -> var .
     (41) double_expression -> var .
@@ -4114,7 +4155,7 @@ state 125
   ! EQUALITY        [ reduce using rule 70 (string_expression -> var .) ]
 
 
-state 126
+state 127
 
     (29) assignment -> DOUBLE_TYPE NAME ASSIGNMENT double_expression .
     (42) double_expression -> double_expression . PLUS double_expression
@@ -4133,7 +4174,7 @@ state 126
     POWER           shift and go to state 47
 
 
-state 127
+state 128
 
     (48) double_expression -> LB double_expression . RB
     (42) double_expression -> double_expression . PLUS double_expression
@@ -4152,7 +4193,7 @@ state 127
     POWER           shift and go to state 47
 
 
-state 128
+state 129
 
     (30) assignment -> INT_TYPE NAME ASSIGNMENT int_expression .
     (51) int_expression -> int_expression . PLUS int_expression
@@ -4171,7 +4212,7 @@ state 128
     POWER           shift and go to state 54
 
 
-state 129
+state 130
 
     (57) int_expression -> LB int_expression . RB
     (51) int_expression -> int_expression . PLUS int_expression
@@ -4190,7 +4231,7 @@ state 129
     POWER           shift and go to state 54
 
 
-state 130
+state 131
 
     (31) assignment -> STRING_TYPE NAME ASSIGNMENT string_expression .
     (71) string_expression -> string_expression . PLUS string_expression
@@ -4199,14 +4240,14 @@ state 130
     PLUS            shift and go to state 56
 
 
-state 131
+state 132
 
     (32) assignment -> CHARACTER_TYPE NAME ASSIGNMENT CHAR .
 
     SEMICOLON       reduce using rule 32 (assignment -> CHARACTER_TYPE NAME ASSIGNMENT CHAR .)
 
 
-state 132
+state 133
 
     (33) assignment -> BOOL_TYPE NAME ASSIGNMENT bool_expression .
     (60) bool_expression -> bool_expression . OR bool_expression
@@ -4223,14 +4264,14 @@ state 132
     EQUALITY        reduce using rule 22 (expression -> bool_expression .)
 
 
-state 133
+state 134
 
     (14) printoutput -> PRINT LB printexpression RB .
 
     SEMICOLON       reduce using rule 14 (printoutput -> PRINT LB printexpression RB .)
 
 
-state 134
+state 135
 
     (16) printexpression -> expression COMMA . printexpression
     (15) printexpression -> . expression
@@ -4285,204 +4326,159 @@ state 134
     NOT             shift and go to state 28
 
     expression                     shift and go to state 115
-    printexpression                shift and go to state 140
+    printexpression                shift and go to state 142
     var                            shift and go to state 20
     double_expression              shift and go to state 10
     int_expression                 shift and go to state 12
     string_expression              shift and go to state 14
     bool_expression                shift and go to state 18
 
-state 135
-
-    (79) dowhile_expression -> DO LP code RP . WHILE LB bool_expression RB
-
-    WHILE           shift and go to state 141
-
-
 state 136
 
-    (80) dowhile_expression -> DO LP dowhile_expression RP . WHILE LB bool_expression RB
+    (78) dowhile_expression -> DO LP insidewhile RP . WHILE LB bool_expression RB
 
-    WHILE           shift and go to state 142
+    WHILE           shift and go to state 143
 
 
 state 137
 
-    (73) code -> assignment SEMICOLON .
-    (76) code -> assignment SEMICOLON . code
-    (73) code -> . assignment SEMICOLON
-    (74) code -> . declaration SEMICOLON
-    (75) code -> . variable_update SEMICOLON
-    (76) code -> . assignment SEMICOLON code
-    (77) code -> . declaration SEMICOLON code
-    (78) code -> . variable_update SEMICOLON code
-    (29) assignment -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression
-    (30) assignment -> . INT_TYPE NAME ASSIGNMENT int_expression
-    (31) assignment -> . STRING_TYPE NAME ASSIGNMENT string_expression
-    (32) assignment -> . CHARACTER_TYPE NAME ASSIGNMENT CHAR
-    (33) assignment -> . BOOL_TYPE NAME ASSIGNMENT bool_expression
-    (34) assignment -> . empty
-    (23) declaration -> . DOUBLE_TYPE NAME
-    (24) declaration -> . INT_TYPE NAME
-    (25) declaration -> . STRING_TYPE NAME
-    (26) declaration -> . CHARACTER_TYPE NAME
-    (27) declaration -> . BOOL_TYPE NAME
-    (28) declaration -> . empty
-    (35) variable_update -> . NAME ASSIGNMENT double_expression
-    (36) variable_update -> . NAME ASSIGNMENT int_expression
-    (37) variable_update -> . NAME ASSIGNMENT string_expression
-    (38) variable_update -> . NAME ASSIGNMENT CHAR
-    (39) variable_update -> . NAME ASSIGNMENT bool_expression
-    (72) empty -> .
+    (79) dowhile_expression -> DO LP dowhile_expression RP . WHILE LB bool_expression RB
 
-    RP              reduce using rule 73 (code -> assignment SEMICOLON .)
-    DOUBLE_TYPE     shift and go to state 8
-    INT_TYPE        shift and go to state 11
-    STRING_TYPE     shift and go to state 13
-    CHARACTER_TYPE  shift and go to state 15
-    BOOL_TYPE       shift and go to state 17
-    NAME            shift and go to state 124
-    SEMICOLON       reduce using rule 72 (empty -> .)
+    WHILE           shift and go to state 144
 
-    assignment                     shift and go to state 121
-    code                           shift and go to state 143
-    declaration                    shift and go to state 122
-    variable_update                shift and go to state 123
-    empty                          shift and go to state 19
 
 state 138
 
-    (74) code -> declaration SEMICOLON .
-    (77) code -> declaration SEMICOLON . code
-    (73) code -> . assignment SEMICOLON
-    (74) code -> . declaration SEMICOLON
-    (75) code -> . variable_update SEMICOLON
-    (76) code -> . assignment SEMICOLON code
-    (77) code -> . declaration SEMICOLON code
-    (78) code -> . variable_update SEMICOLON code
-    (29) assignment -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression
-    (30) assignment -> . INT_TYPE NAME ASSIGNMENT int_expression
-    (31) assignment -> . STRING_TYPE NAME ASSIGNMENT string_expression
-    (32) assignment -> . CHARACTER_TYPE NAME ASSIGNMENT CHAR
-    (33) assignment -> . BOOL_TYPE NAME ASSIGNMENT bool_expression
-    (34) assignment -> . empty
-    (23) declaration -> . DOUBLE_TYPE NAME
-    (24) declaration -> . INT_TYPE NAME
-    (25) declaration -> . STRING_TYPE NAME
-    (26) declaration -> . CHARACTER_TYPE NAME
-    (27) declaration -> . BOOL_TYPE NAME
-    (28) declaration -> . empty
-    (35) variable_update -> . NAME ASSIGNMENT double_expression
-    (36) variable_update -> . NAME ASSIGNMENT int_expression
-    (37) variable_update -> . NAME ASSIGNMENT string_expression
-    (38) variable_update -> . NAME ASSIGNMENT CHAR
-    (39) variable_update -> . NAME ASSIGNMENT bool_expression
-    (72) empty -> .
+    (77) insidewhile -> code insidewhile .
 
-    RP              reduce using rule 74 (code -> declaration SEMICOLON .)
-    DOUBLE_TYPE     shift and go to state 8
-    INT_TYPE        shift and go to state 11
-    STRING_TYPE     shift and go to state 13
-    CHARACTER_TYPE  shift and go to state 15
-    BOOL_TYPE       shift and go to state 17
-    NAME            shift and go to state 124
-    SEMICOLON       reduce using rule 72 (empty -> .)
+    RP              reduce using rule 77 (insidewhile -> code insidewhile .)
 
-    declaration                    shift and go to state 122
-    code                           shift and go to state 144
-    assignment                     shift and go to state 121
-    variable_update                shift and go to state 123
-    empty                          shift and go to state 19
 
 state 139
 
-    (75) code -> variable_update SEMICOLON .
-    (78) code -> variable_update SEMICOLON . code
-    (73) code -> . assignment SEMICOLON
-    (74) code -> . declaration SEMICOLON
-    (75) code -> . variable_update SEMICOLON
-    (76) code -> . assignment SEMICOLON code
-    (77) code -> . declaration SEMICOLON code
-    (78) code -> . variable_update SEMICOLON code
-    (29) assignment -> . DOUBLE_TYPE NAME ASSIGNMENT double_expression
-    (30) assignment -> . INT_TYPE NAME ASSIGNMENT int_expression
-    (31) assignment -> . STRING_TYPE NAME ASSIGNMENT string_expression
-    (32) assignment -> . CHARACTER_TYPE NAME ASSIGNMENT CHAR
-    (33) assignment -> . BOOL_TYPE NAME ASSIGNMENT bool_expression
-    (34) assignment -> . empty
-    (23) declaration -> . DOUBLE_TYPE NAME
-    (24) declaration -> . INT_TYPE NAME
-    (25) declaration -> . STRING_TYPE NAME
-    (26) declaration -> . CHARACTER_TYPE NAME
-    (27) declaration -> . BOOL_TYPE NAME
-    (28) declaration -> . empty
-    (35) variable_update -> . NAME ASSIGNMENT double_expression
-    (36) variable_update -> . NAME ASSIGNMENT int_expression
-    (37) variable_update -> . NAME ASSIGNMENT string_expression
-    (38) variable_update -> . NAME ASSIGNMENT CHAR
-    (39) variable_update -> . NAME ASSIGNMENT bool_expression
-    (72) empty -> .
+    (73) code -> assignment SEMICOLON .
 
-    RP              reduce using rule 75 (code -> variable_update SEMICOLON .)
-    DOUBLE_TYPE     shift and go to state 8
-    INT_TYPE        shift and go to state 11
-    STRING_TYPE     shift and go to state 13
-    CHARACTER_TYPE  shift and go to state 15
-    BOOL_TYPE       shift and go to state 17
-    NAME            shift and go to state 124
-    SEMICOLON       reduce using rule 72 (empty -> .)
+    DOUBLE_TYPE     reduce using rule 73 (code -> assignment SEMICOLON .)
+    INT_TYPE        reduce using rule 73 (code -> assignment SEMICOLON .)
+    STRING_TYPE     reduce using rule 73 (code -> assignment SEMICOLON .)
+    CHARACTER_TYPE  reduce using rule 73 (code -> assignment SEMICOLON .)
+    BOOL_TYPE       reduce using rule 73 (code -> assignment SEMICOLON .)
+    NAME            reduce using rule 73 (code -> assignment SEMICOLON .)
+    SEMICOLON       reduce using rule 73 (code -> assignment SEMICOLON .)
+    RP              reduce using rule 73 (code -> assignment SEMICOLON .)
 
-    variable_update                shift and go to state 123
-    code                           shift and go to state 145
-    assignment                     shift and go to state 121
-    declaration                    shift and go to state 122
-    empty                          shift and go to state 19
 
 state 140
+
+    (74) code -> declaration SEMICOLON .
+
+    DOUBLE_TYPE     reduce using rule 74 (code -> declaration SEMICOLON .)
+    INT_TYPE        reduce using rule 74 (code -> declaration SEMICOLON .)
+    STRING_TYPE     reduce using rule 74 (code -> declaration SEMICOLON .)
+    CHARACTER_TYPE  reduce using rule 74 (code -> declaration SEMICOLON .)
+    BOOL_TYPE       reduce using rule 74 (code -> declaration SEMICOLON .)
+    NAME            reduce using rule 74 (code -> declaration SEMICOLON .)
+    SEMICOLON       reduce using rule 74 (code -> declaration SEMICOLON .)
+    RP              reduce using rule 74 (code -> declaration SEMICOLON .)
+
+
+state 141
+
+    (75) code -> variable_update SEMICOLON .
+
+    DOUBLE_TYPE     reduce using rule 75 (code -> variable_update SEMICOLON .)
+    INT_TYPE        reduce using rule 75 (code -> variable_update SEMICOLON .)
+    STRING_TYPE     reduce using rule 75 (code -> variable_update SEMICOLON .)
+    CHARACTER_TYPE  reduce using rule 75 (code -> variable_update SEMICOLON .)
+    BOOL_TYPE       reduce using rule 75 (code -> variable_update SEMICOLON .)
+    NAME            reduce using rule 75 (code -> variable_update SEMICOLON .)
+    SEMICOLON       reduce using rule 75 (code -> variable_update SEMICOLON .)
+    RP              reduce using rule 75 (code -> variable_update SEMICOLON .)
+
+
+state 142
 
     (16) printexpression -> expression COMMA printexpression .
 
     RB              reduce using rule 16 (printexpression -> expression COMMA printexpression .)
 
 
-state 141
-
-    (79) dowhile_expression -> DO LP code RP WHILE . LB bool_expression RB
-
-    LB              shift and go to state 146
-
-
-state 142
-
-    (80) dowhile_expression -> DO LP dowhile_expression RP WHILE . LB bool_expression RB
-
-    LB              shift and go to state 147
-
-
 state 143
 
-    (76) code -> assignment SEMICOLON code .
+    (78) dowhile_expression -> DO LP insidewhile RP WHILE . LB bool_expression RB
 
-    RP              reduce using rule 76 (code -> assignment SEMICOLON code .)
+    LB              shift and go to state 145
 
 
 state 144
 
-    (77) code -> declaration SEMICOLON code .
+    (79) dowhile_expression -> DO LP dowhile_expression RP WHILE . LB bool_expression RB
 
-    RP              reduce using rule 77 (code -> declaration SEMICOLON code .)
+    LB              shift and go to state 146
 
 
 state 145
 
-    (78) code -> variable_update SEMICOLON code .
+    (78) dowhile_expression -> DO LP insidewhile RP WHILE LB . bool_expression RB
+    (58) bool_expression -> . BOOL
+    (59) bool_expression -> . var
+    (60) bool_expression -> . bool_expression OR bool_expression
+    (61) bool_expression -> . bool_expression AND bool_expression
+    (62) bool_expression -> . expression LESS expression
+    (63) bool_expression -> . expression LESSEQUAL expression
+    (64) bool_expression -> . expression GREATER expression
+    (65) bool_expression -> . expression GREATEREQUAL expression
+    (66) bool_expression -> . expression EQUALITY expression
+    (67) bool_expression -> . NOT bool_expression
+    (68) bool_expression -> . LB bool_expression RB
+    (13) var -> . NAME
+    (17) expression -> . var
+    (18) expression -> . CHAR
+    (19) expression -> . double_expression
+    (20) expression -> . int_expression
+    (21) expression -> . string_expression
+    (22) expression -> . bool_expression
+    (40) double_expression -> . DOUBLE
+    (41) double_expression -> . var
+    (42) double_expression -> . double_expression PLUS double_expression
+    (43) double_expression -> . double_expression MINUS double_expression
+    (44) double_expression -> . double_expression MULTIPLY double_expression
+    (45) double_expression -> . double_expression DIVIDE double_expression
+    (46) double_expression -> . double_expression MOD double_expression
+    (47) double_expression -> . double_expression POWER double_expression
+    (48) double_expression -> . LB double_expression RB
+    (49) int_expression -> . INT
+    (50) int_expression -> . var
+    (51) int_expression -> . int_expression PLUS int_expression
+    (52) int_expression -> . int_expression MINUS int_expression
+    (53) int_expression -> . int_expression MULTIPLY int_expression
+    (54) int_expression -> . int_expression DIVIDE int_expression
+    (55) int_expression -> . int_expression MOD int_expression
+    (56) int_expression -> . int_expression POWER int_expression
+    (57) int_expression -> . LB int_expression RB
+    (69) string_expression -> . STRING
+    (70) string_expression -> . var
+    (71) string_expression -> . string_expression PLUS string_expression
 
-    RP              reduce using rule 78 (code -> variable_update SEMICOLON code .)
+    BOOL            shift and go to state 27
+    NOT             shift and go to state 28
+    LB              shift and go to state 71
+    NAME            shift and go to state 67
+    CHAR            shift and go to state 16
+    DOUBLE          shift and go to state 24
+    INT             shift and go to state 25
+    STRING          shift and go to state 26
 
+    bool_expression                shift and go to state 147
+    var                            shift and go to state 70
+    expression                     shift and go to state 66
+    double_expression              shift and go to state 10
+    int_expression                 shift and go to state 12
+    string_expression              shift and go to state 14
 
 state 146
 
-    (79) dowhile_expression -> DO LP code RP WHILE LB . bool_expression RB
+    (79) dowhile_expression -> DO LP dowhile_expression RP WHILE LB . bool_expression RB
     (58) bool_expression -> . BOOL
     (59) bool_expression -> . var
     (60) bool_expression -> . bool_expression OR bool_expression
@@ -4541,66 +4537,24 @@ state 146
 
 state 147
 
-    (80) dowhile_expression -> DO LP dowhile_expression RP WHILE LB . bool_expression RB
-    (58) bool_expression -> . BOOL
-    (59) bool_expression -> . var
-    (60) bool_expression -> . bool_expression OR bool_expression
-    (61) bool_expression -> . bool_expression AND bool_expression
-    (62) bool_expression -> . expression LESS expression
-    (63) bool_expression -> . expression LESSEQUAL expression
-    (64) bool_expression -> . expression GREATER expression
-    (65) bool_expression -> . expression GREATEREQUAL expression
-    (66) bool_expression -> . expression EQUALITY expression
-    (67) bool_expression -> . NOT bool_expression
-    (68) bool_expression -> . LB bool_expression RB
-    (13) var -> . NAME
-    (17) expression -> . var
-    (18) expression -> . CHAR
-    (19) expression -> . double_expression
-    (20) expression -> . int_expression
-    (21) expression -> . string_expression
-    (22) expression -> . bool_expression
-    (40) double_expression -> . DOUBLE
-    (41) double_expression -> . var
-    (42) double_expression -> . double_expression PLUS double_expression
-    (43) double_expression -> . double_expression MINUS double_expression
-    (44) double_expression -> . double_expression MULTIPLY double_expression
-    (45) double_expression -> . double_expression DIVIDE double_expression
-    (46) double_expression -> . double_expression MOD double_expression
-    (47) double_expression -> . double_expression POWER double_expression
-    (48) double_expression -> . LB double_expression RB
-    (49) int_expression -> . INT
-    (50) int_expression -> . var
-    (51) int_expression -> . int_expression PLUS int_expression
-    (52) int_expression -> . int_expression MINUS int_expression
-    (53) int_expression -> . int_expression MULTIPLY int_expression
-    (54) int_expression -> . int_expression DIVIDE int_expression
-    (55) int_expression -> . int_expression MOD int_expression
-    (56) int_expression -> . int_expression POWER int_expression
-    (57) int_expression -> . LB int_expression RB
-    (69) string_expression -> . STRING
-    (70) string_expression -> . var
-    (71) string_expression -> . string_expression PLUS string_expression
+    (78) dowhile_expression -> DO LP insidewhile RP WHILE LB bool_expression . RB
+    (60) bool_expression -> bool_expression . OR bool_expression
+    (61) bool_expression -> bool_expression . AND bool_expression
+    (22) expression -> bool_expression .
 
-    BOOL            shift and go to state 27
-    NOT             shift and go to state 28
-    LB              shift and go to state 71
-    NAME            shift and go to state 67
-    CHAR            shift and go to state 16
-    DOUBLE          shift and go to state 24
-    INT             shift and go to state 25
-    STRING          shift and go to state 26
+    RB              shift and go to state 149
+    OR              shift and go to state 59
+    AND             shift and go to state 60
+    LESS            reduce using rule 22 (expression -> bool_expression .)
+    LESSEQUAL       reduce using rule 22 (expression -> bool_expression .)
+    GREATER         reduce using rule 22 (expression -> bool_expression .)
+    GREATEREQUAL    reduce using rule 22 (expression -> bool_expression .)
+    EQUALITY        reduce using rule 22 (expression -> bool_expression .)
 
-    bool_expression                shift and go to state 149
-    var                            shift and go to state 70
-    expression                     shift and go to state 66
-    double_expression              shift and go to state 10
-    int_expression                 shift and go to state 12
-    string_expression              shift and go to state 14
 
 state 148
 
-    (79) dowhile_expression -> DO LP code RP WHILE LB bool_expression . RB
+    (79) dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression . RB
     (60) bool_expression -> bool_expression . OR bool_expression
     (61) bool_expression -> bool_expression . AND bool_expression
     (22) expression -> bool_expression .
@@ -4617,35 +4571,18 @@ state 148
 
 state 149
 
-    (80) dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression . RB
-    (60) bool_expression -> bool_expression . OR bool_expression
-    (61) bool_expression -> bool_expression . AND bool_expression
-    (22) expression -> bool_expression .
+    (78) dowhile_expression -> DO LP insidewhile RP WHILE LB bool_expression RB .
 
-    RB              shift and go to state 151
-    OR              shift and go to state 59
-    AND             shift and go to state 60
-    LESS            reduce using rule 22 (expression -> bool_expression .)
-    LESSEQUAL       reduce using rule 22 (expression -> bool_expression .)
-    GREATER         reduce using rule 22 (expression -> bool_expression .)
-    GREATEREQUAL    reduce using rule 22 (expression -> bool_expression .)
-    EQUALITY        reduce using rule 22 (expression -> bool_expression .)
+    SEMICOLON       reduce using rule 78 (dowhile_expression -> DO LP insidewhile RP WHILE LB bool_expression RB .)
+    RP              reduce using rule 78 (dowhile_expression -> DO LP insidewhile RP WHILE LB bool_expression RB .)
 
 
 state 150
 
-    (79) dowhile_expression -> DO LP code RP WHILE LB bool_expression RB .
+    (79) dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .
 
-    SEMICOLON       reduce using rule 79 (dowhile_expression -> DO LP code RP WHILE LB bool_expression RB .)
-    RP              reduce using rule 79 (dowhile_expression -> DO LP code RP WHILE LB bool_expression RB .)
-
-
-state 151
-
-    (80) dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .
-
-    SEMICOLON       reduce using rule 80 (dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .)
-    RP              reduce using rule 80 (dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .)
+    SEMICOLON       reduce using rule 79 (dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .)
+    RP              reduce using rule 79 (dowhile_expression -> DO LP dowhile_expression RP WHILE LB bool_expression RB .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -4757,14 +4694,14 @@ WARNING: reduce/reduce conflict in state 112 resolved using rule (expression -> 
 WARNING: rejected rule (bool_expression -> bool_expression OR bool_expression) in state 112
 WARNING: reduce/reduce conflict in state 113 resolved using rule (expression -> bool_expression)
 WARNING: rejected rule (bool_expression -> bool_expression AND bool_expression) in state 113
-WARNING: reduce/reduce conflict in state 125 resolved using rule (double_expression -> var)
-WARNING: rejected rule (bool_expression -> var) in state 125
-WARNING: reduce/reduce conflict in state 125 resolved using rule (double_expression -> var)
-WARNING: rejected rule (int_expression -> var) in state 125
-WARNING: reduce/reduce conflict in state 125 resolved using rule (expression -> var)
-WARNING: rejected rule (double_expression -> var) in state 125
-WARNING: reduce/reduce conflict in state 125 resolved using rule (double_expression -> var)
-WARNING: rejected rule (string_expression -> var) in state 125
-WARNING: reduce/reduce conflict in state 125 resolved using rule (expression -> var)
-WARNING: rejected rule (string_expression -> var) in state 125
+WARNING: reduce/reduce conflict in state 126 resolved using rule (double_expression -> var)
+WARNING: rejected rule (bool_expression -> var) in state 126
+WARNING: reduce/reduce conflict in state 126 resolved using rule (double_expression -> var)
+WARNING: rejected rule (int_expression -> var) in state 126
+WARNING: reduce/reduce conflict in state 126 resolved using rule (expression -> var)
+WARNING: rejected rule (double_expression -> var) in state 126
+WARNING: reduce/reduce conflict in state 126 resolved using rule (double_expression -> var)
+WARNING: rejected rule (string_expression -> var) in state 126
+WARNING: reduce/reduce conflict in state 126 resolved using rule (expression -> var)
+WARNING: rejected rule (string_expression -> var) in state 126
 WARNING: Rule (assignment -> empty) is never reduced

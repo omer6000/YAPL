@@ -1,5 +1,6 @@
 int x = 5;
 do {
     int a = 3;
-    int a = 5;
+    int c = 5;
+    int w = 3;
 } while(true);

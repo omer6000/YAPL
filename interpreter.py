@@ -8,7 +8,7 @@ var_env = {}
 
 def eval_exp(tree):
     global var_env
-    print(tree)
+    print("hello",tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:

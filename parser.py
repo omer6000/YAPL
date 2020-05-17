@@ -195,15 +195,22 @@ def p_code(p):
     code : assignment SEMICOLON
          | declaration SEMICOLON
          | variable_update SEMICOLON
-         | assignment SEMICOLON code
-         | declaration SEMICOLON code
-         | variable_update SEMICOLON code
     '''
     p[0] = p[1]
 
+def p_insidewhile(p):
+    '''
+    insidewhile : code
+                | code insidewhile 
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[2]
+
 def p_dowhile(p):
     '''
-    dowhile_expression : DO LP code RP WHILE LB bool_expression RB
+    dowhile_expression : DO LP insidewhile RP WHILE LB bool_expression RB
                        | DO LP dowhile_expression RP WHILE LB bool_expression RB
     '''
     p[0] = ("dowhile" , p[3], p[7])

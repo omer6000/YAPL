@@ -9,7 +9,6 @@ var_struct = {}
 def eval_exp(tree):
     global var_env
     global var_struct
-    # print(tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:
@@ -20,14 +19,9 @@ def eval_exp(tree):
         arr = tree[1]
         if len(arr) > 0:
             for x in arr:
-                try:
-                    print(eval_exp(x),"",end="")
-                except:
-                    print("TypeError")
-                    sys.exit()
+                print(eval_exp(x),"",end="")
             print("")
     elif tree[0] == "struct":
-        # print(tree)
         name = tree[1]
         if name in var_struct:
             print("Structure already declared!!")
@@ -37,9 +31,6 @@ def eval_exp(tree):
             for var in tree[2]:
                 var_struct[name].append((var[1], var[2]))
     elif tree[0] == "dowhile":
-        pass
-        # print(tree[1])
-        pass
         while True:
             code_inside = tree[1]
             for x in code_inside:
@@ -85,7 +76,6 @@ def eval_exp(tree):
             struct_name = name.split(".")[0]
             variable_name = name.split(".")[1]
             var_env[struct_name][variable_name] = val
-            # print(var_env)
         elif name in var_env:
             typeval = var_env[name][0]
             if typeval == 'bool' and val == "false":
@@ -174,11 +164,13 @@ def eval_exp(tree):
             return False
         else:
             return not eval_exp(tree[1])
+    else:
+        print("TypeError")
  
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         filename = sys.argv[1]
-        f = open(filename, "r")
+        f = open("test_cases/"+filename, "r")
         code = f.read()
         filelex = lex.lex(module = lexer)
         filelex.input(code)

@@ -248,30 +248,11 @@ def p_loop_condition(p):
     '''
     p[0] = ("dowhole condition" ,p[2], p[1], p[3])
 
-# def p_dowhile(p):
-#     '''
-#     dowhile_inside : DO LP insidewhile RP WHILE LB condition RB
-#     '''
-#     p[0] = ("dowhile" , p[3], p[7])
-
-# def p_dowhile2(p):
-#     '''
-#     dowhile_inside : DO LP insidewhile RP WHILE LB condition RB
-#                    | DO LP dowhile_inside RP WHILE LB condition RB
-#     '''
-#     p[0] = ("dowhile" , p[3], p[7])
-
 def p_dowhile(p):
     '''
     dowhile_expression : DO LP insidewhile RP WHILE LB condition RB
     '''
     p[0] = ("dowhile", p[3], p[7])
-
-# def p_dowhile2(p):
-#     '''
-#     dowhile_expression : DO LP insidewhile RP WHILE LB condition RB
-#     '''
-
 
 def p_struct_code(p):
     '''
@@ -316,4 +297,3 @@ def p_empty(p):
 
 def p_error(p):
     print("TypeError")
-

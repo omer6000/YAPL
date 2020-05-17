@@ -8,6 +8,7 @@ var_env = {}
 
 def eval_exp(tree):
     global var_env
+    print(tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:
@@ -23,14 +24,32 @@ def eval_exp(tree):
         else:
             typeval = tree[1]
             val = tree[3]
-            var_env[name] = [typeval, eval_exp(val)]
+            if typeval == 'bool' and val == "false":
+                var_env[name] = [typeval, False]
+            elif typeval == 'bool' and val == "true":
+                var_env[name] = [typeval, True]
+            else:
+                var_env[name] = [typeval, eval_exp(val)]
     elif tree[0] == "declaration":
         name = tree[2]
         if name in var_env:
             print("Error variable already declared!!!")
         else:
             typeval = tree[1]
-            var_env[name] = []
+            var_env[name] = [typeval, ""]
+    elif tree[0] == "variable_update":
+        name = tree[1]
+        val = tree[2]
+        if name in var_env:
+            typeval = var_env[name][0]
+            if typeval == 'bool' and val == "false":
+                var_env[name] = [typeval, False]
+            elif typeval == 'bool' and val == "true":
+                var_env[name] = [typeval, True]
+            else:
+                var_env[name] = [typeval, eval_exp(val)]
+        else:
+            print("Variable does not exist!!")
     elif tree[0] == "variable":
         if tree[1] in var_env:
             return var_env[tree[1]][1]
@@ -44,7 +63,44 @@ def eval_exp(tree):
         return eval_exp(tree[1]) * eval_exp(tree[2])
     elif tree[0] == "/":
         return eval_exp(tree[1]) / eval_exp(tree[2])
+    elif tree[0] == "^":
+        return eval_exp(tree[1]) ** eval_exp(tree[2])
+    elif tree[0] == "%":
+        return eval_exp(tree[1]) % eval_exp(tree[2])
+    elif tree[0] == "&&":
+        val_left = None
+        val_right = None
+        if tree[1] == "false":
+            val_left = False
+        elif tree[1] == "true":
+            val_left = True
+        else:
+            val_left = eval_exp(tree[1])
+        if tree[2] == "false":
+            val_right = False
+        elif tree[2] == "true":
+            val_right = True
+        else:
+            val_right = eval_exp(tree[2])
+        return val_left and val_right
+    elif tree[0] == "||":
+        val_left = True
+        val_right = True
+        if tree[1] == "false":
+            val_left = False
+        elif tree[1] == "true":
+            val_left = True
+        else:
+            val_left = eval_exp(tree[1])
+        if tree[2] == "false":
+            val_right = False
+        elif tree[2] == "true":
+            val_right = True
+        else:
+            val_right = eval_exp(tree[2])
+        return val_left or val_right  
 
+ 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         filename = sys.argv[1]

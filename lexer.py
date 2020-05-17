@@ -21,7 +21,13 @@ tokens = [
     'PRINT',
     'LB',
     'RB',
-    'COMMA'
+    'COMMA',
+    'POWER',
+    'MOD',
+    'INCREMENT',
+    'DECREMENT',
+    'AND',
+    'OR'
 ]
 
 t_PLUS = r'\+'
@@ -33,15 +39,29 @@ t_SEMICOLON = r'\;'
 t_LB = r'\('
 t_RB = r'\)'
 t_COMMA = r'\,'
+t_MOD = r'\%'
+t_POWER = r'\^'
 t_ignore = ' \t\v\r'
-
-def t_PRINT(t):
-    r'print'
-    return t
 
 def t_newline(t):
     r'\n'
     t.lexer.lineno += 1
+
+def t_INCREMENT(t):
+    r'\+\+'
+    return t
+
+def t_DECREMENT(t):
+    r'\-\-'
+    return t
+
+def t_AND(t):
+    r'\&\&'
+    return t
+
+def t_OR(t):
+    r'\|\|'
+    return t
 
 def t_DOUBLE(t):
     r'\d+\.\d+'
@@ -85,6 +105,10 @@ def t_CHARACTER_TYPE(t):
 
 def t_STRING_TYPE(t):
     r'string'
+    return t
+
+def t_PRINT(t):
+    r'print'
     return t
 
 def t_NAME(t):

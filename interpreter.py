@@ -20,7 +20,11 @@ def eval_exp(tree):
         arr = tree[1]
         if len(arr) > 0:
             for x in arr:
-                print(eval_exp(x),"",end="")
+                try:
+                    print(eval_exp(x),"",end="")
+                except:
+                    print("TypeError")
+                    sys.exit()
             print("")
     elif tree[0] == "struct":
         # print(tree)

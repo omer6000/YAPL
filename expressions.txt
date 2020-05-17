@@ -9,4 +9,4 @@ double quadratic_root1 = (-b + determinant^(1/2)) / ( 2.0*a );
 print(quadratic_root1);
 bool d = false;
 print(not true == (not (not d)) && (true != 0));
-print("A");
+print("Hi");

@@ -1,4 +1,5 @@
 import ply.lex as lex
+import sys
 
 tokens = [
     'PLUS',
@@ -164,7 +165,7 @@ def t_NAME(t):
     return t
 
 def t_error(t):
-    print("Illegal Characters!")
+    print("TypeError")
     t.lexer.skip(1)
 
 lexer = lex.lex()

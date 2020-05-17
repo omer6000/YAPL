@@ -3537,8 +3537,6 @@ state 83
 
     PLUS            reduce using rule 56 (double_expression -> MINUS double_expression .)
     MINUS           reduce using rule 56 (double_expression -> MINUS double_expression .)
-    MOD             reduce using rule 56 (double_expression -> MINUS double_expression .)
-    POWER           reduce using rule 56 (double_expression -> MINUS double_expression .)
     SEMICOLON       reduce using rule 56 (double_expression -> MINUS double_expression .)
     LESS            reduce using rule 56 (double_expression -> MINUS double_expression .)
     LESSEQUAL       reduce using rule 56 (double_expression -> MINUS double_expression .)
@@ -3552,13 +3550,15 @@ state 83
     COMMA           reduce using rule 56 (double_expression -> MINUS double_expression .)
     MULTIPLY        shift and go to state 54
     DIVIDE          shift and go to state 55
+    MOD             shift and go to state 56
+    POWER           shift and go to state 57
 
   ! MULTIPLY        [ reduce using rule 56 (double_expression -> MINUS double_expression .) ]
   ! DIVIDE          [ reduce using rule 56 (double_expression -> MINUS double_expression .) ]
+  ! MOD             [ reduce using rule 56 (double_expression -> MINUS double_expression .) ]
+  ! POWER           [ reduce using rule 56 (double_expression -> MINUS double_expression .) ]
   ! PLUS            [ shift and go to state 52 ]
   ! MINUS           [ shift and go to state 53 ]
-  ! MOD             [ shift and go to state 56 ]
-  ! POWER           [ shift and go to state 57 ]
 
 
 state 84
@@ -3575,8 +3575,6 @@ state 84
     DECREMENT       reduce using rule 66 (int_expression -> MINUS int_expression .)
     PLUS            reduce using rule 66 (int_expression -> MINUS int_expression .)
     MINUS           reduce using rule 66 (int_expression -> MINUS int_expression .)
-    MOD             reduce using rule 66 (int_expression -> MINUS int_expression .)
-    POWER           reduce using rule 66 (int_expression -> MINUS int_expression .)
     SEMICOLON       reduce using rule 66 (int_expression -> MINUS int_expression .)
     LESS            reduce using rule 66 (int_expression -> MINUS int_expression .)
     LESSEQUAL       reduce using rule 66 (int_expression -> MINUS int_expression .)
@@ -3590,13 +3588,15 @@ state 84
     COMMA           reduce using rule 66 (int_expression -> MINUS int_expression .)
     MULTIPLY        shift and go to state 63
     DIVIDE          shift and go to state 64
+    MOD             shift and go to state 65
+    POWER           shift and go to state 66
 
   ! MULTIPLY        [ reduce using rule 66 (int_expression -> MINUS int_expression .) ]
   ! DIVIDE          [ reduce using rule 66 (int_expression -> MINUS int_expression .) ]
+  ! MOD             [ reduce using rule 66 (int_expression -> MINUS int_expression .) ]
+  ! POWER           [ reduce using rule 66 (int_expression -> MINUS int_expression .) ]
   ! PLUS            [ shift and go to state 61 ]
   ! MINUS           [ shift and go to state 62 ]
-  ! MOD             [ shift and go to state 65 ]
-  ! POWER           [ shift and go to state 66 ]
 
 
 state 85
@@ -4337,8 +4337,6 @@ state 112
 
     PLUS            reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
     MINUS           reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
-    MOD             reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
-    POWER           reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
     SEMICOLON       reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
     LESS            reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
     LESSEQUAL       reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
@@ -4352,13 +4350,15 @@ state 112
     COMMA           reduce using rule 50 (double_expression -> double_expression PLUS double_expression .)
     MULTIPLY        shift and go to state 54
     DIVIDE          shift and go to state 55
+    MOD             shift and go to state 56
+    POWER           shift and go to state 57
 
   ! MULTIPLY        [ reduce using rule 50 (double_expression -> double_expression PLUS double_expression .) ]
   ! DIVIDE          [ reduce using rule 50 (double_expression -> double_expression PLUS double_expression .) ]
+  ! MOD             [ reduce using rule 50 (double_expression -> double_expression PLUS double_expression .) ]
+  ! POWER           [ reduce using rule 50 (double_expression -> double_expression PLUS double_expression .) ]
   ! PLUS            [ shift and go to state 52 ]
   ! MINUS           [ shift and go to state 53 ]
-  ! MOD             [ shift and go to state 56 ]
-  ! POWER           [ shift and go to state 57 ]
 
 
 state 113
@@ -4469,8 +4469,6 @@ state 117
 
     PLUS            reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
     MINUS           reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
-    MOD             reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
-    POWER           reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
     SEMICOLON       reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
     LESS            reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
     LESSEQUAL       reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
@@ -4484,13 +4482,15 @@ state 117
     COMMA           reduce using rule 51 (double_expression -> double_expression MINUS double_expression .)
     MULTIPLY        shift and go to state 54
     DIVIDE          shift and go to state 55
+    MOD             shift and go to state 56
+    POWER           shift and go to state 57
 
   ! MULTIPLY        [ reduce using rule 51 (double_expression -> double_expression MINUS double_expression .) ]
   ! DIVIDE          [ reduce using rule 51 (double_expression -> double_expression MINUS double_expression .) ]
+  ! MOD             [ reduce using rule 51 (double_expression -> double_expression MINUS double_expression .) ]
+  ! POWER           [ reduce using rule 51 (double_expression -> double_expression MINUS double_expression .) ]
   ! PLUS            [ shift and go to state 52 ]
   ! MINUS           [ shift and go to state 53 ]
-  ! MOD             [ shift and go to state 56 ]
-  ! POWER           [ shift and go to state 57 ]
 
 
 state 118
@@ -4507,8 +4507,6 @@ state 118
     MINUS           reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     MULTIPLY        reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     DIVIDE          reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
-    MOD             reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
-    POWER           reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     SEMICOLON       reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     LESS            reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     LESSEQUAL       reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
@@ -4520,13 +4518,15 @@ state 118
     OR              reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     AND             reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
     COMMA           reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .)
+    MOD             shift and go to state 56
+    POWER           shift and go to state 57
 
+  ! MOD             [ reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .) ]
+  ! POWER           [ reduce using rule 52 (double_expression -> double_expression MULTIPLY double_expression .) ]
   ! PLUS            [ shift and go to state 52 ]
   ! MINUS           [ shift and go to state 53 ]
   ! MULTIPLY        [ shift and go to state 54 ]
   ! DIVIDE          [ shift and go to state 55 ]
-  ! MOD             [ shift and go to state 56 ]
-  ! POWER           [ shift and go to state 57 ]
 
 
 state 119
@@ -4543,8 +4543,6 @@ state 119
     MINUS           reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     MULTIPLY        reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     DIVIDE          reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
-    MOD             reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
-    POWER           reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     SEMICOLON       reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     LESS            reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     LESSEQUAL       reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
@@ -4556,13 +4554,15 @@ state 119
     OR              reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     AND             reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
     COMMA           reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .)
+    MOD             shift and go to state 56
+    POWER           shift and go to state 57
 
+  ! MOD             [ reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .) ]
+  ! POWER           [ reduce using rule 53 (double_expression -> double_expression DIVIDE double_expression .) ]
   ! PLUS            [ shift and go to state 52 ]
   ! MINUS           [ shift and go to state 53 ]
   ! MULTIPLY        [ shift and go to state 54 ]
   ! DIVIDE          [ shift and go to state 55 ]
-  ! MOD             [ shift and go to state 56 ]
-  ! POWER           [ shift and go to state 57 ]
 
 
 state 120
@@ -4575,12 +4575,12 @@ state 120
     (54) double_expression -> double_expression . MOD double_expression
     (55) double_expression -> double_expression . POWER double_expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLY resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
+    PLUS            reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
+    MINUS           reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
+    MULTIPLY        reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
+    DIVIDE          reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
+    MOD             reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
+    POWER           reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
     SEMICOLON       reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
     LESS            reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
     LESSEQUAL       reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
@@ -4592,19 +4592,13 @@ state 120
     OR              reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
     AND             reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
     COMMA           reduce using rule 54 (double_expression -> double_expression MOD double_expression .)
-    PLUS            shift and go to state 52
-    MINUS           shift and go to state 53
-    MULTIPLY        shift and go to state 54
-    DIVIDE          shift and go to state 55
-    MOD             shift and go to state 56
-    POWER           shift and go to state 57
 
-  ! PLUS            [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
-  ! MINUS           [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
-  ! MULTIPLY        [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
-  ! DIVIDE          [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
-  ! MOD             [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
-  ! POWER           [ reduce using rule 54 (double_expression -> double_expression MOD double_expression .) ]
+  ! PLUS            [ shift and go to state 52 ]
+  ! MINUS           [ shift and go to state 53 ]
+  ! MULTIPLY        [ shift and go to state 54 ]
+  ! DIVIDE          [ shift and go to state 55 ]
+  ! MOD             [ shift and go to state 56 ]
+  ! POWER           [ shift and go to state 57 ]
 
 
 state 121
@@ -4617,12 +4611,12 @@ state 121
     (54) double_expression -> double_expression . MOD double_expression
     (55) double_expression -> double_expression . POWER double_expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLY resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
+    PLUS            reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
+    MINUS           reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
+    MULTIPLY        reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
+    DIVIDE          reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
+    MOD             reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
+    POWER           reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
     SEMICOLON       reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
     LESS            reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
     LESSEQUAL       reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
@@ -4634,19 +4628,13 @@ state 121
     OR              reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
     AND             reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
     COMMA           reduce using rule 55 (double_expression -> double_expression POWER double_expression .)
-    PLUS            shift and go to state 52
-    MINUS           shift and go to state 53
-    MULTIPLY        shift and go to state 54
-    DIVIDE          shift and go to state 55
-    MOD             shift and go to state 56
-    POWER           shift and go to state 57
 
-  ! PLUS            [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
-  ! MINUS           [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
-  ! MULTIPLY        [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
-  ! DIVIDE          [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
-  ! MOD             [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
-  ! POWER           [ reduce using rule 55 (double_expression -> double_expression POWER double_expression .) ]
+  ! PLUS            [ shift and go to state 52 ]
+  ! MINUS           [ shift and go to state 53 ]
+  ! MULTIPLY        [ shift and go to state 54 ]
+  ! DIVIDE          [ shift and go to state 55 ]
+  ! MOD             [ shift and go to state 56 ]
+  ! POWER           [ shift and go to state 57 ]
 
 
 state 122
@@ -4686,8 +4674,6 @@ state 123
     DECREMENT       reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     PLUS            reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     MINUS           reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
-    MOD             reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
-    POWER           reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     SEMICOLON       reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     LESS            reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     LESSEQUAL       reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
@@ -4701,13 +4687,15 @@ state 123
     COMMA           reduce using rule 60 (int_expression -> int_expression PLUS int_expression .)
     MULTIPLY        shift and go to state 63
     DIVIDE          shift and go to state 64
+    MOD             shift and go to state 65
+    POWER           shift and go to state 66
 
   ! MULTIPLY        [ reduce using rule 60 (int_expression -> int_expression PLUS int_expression .) ]
   ! DIVIDE          [ reduce using rule 60 (int_expression -> int_expression PLUS int_expression .) ]
+  ! MOD             [ reduce using rule 60 (int_expression -> int_expression PLUS int_expression .) ]
+  ! POWER           [ reduce using rule 60 (int_expression -> int_expression PLUS int_expression .) ]
   ! PLUS            [ shift and go to state 61 ]
   ! MINUS           [ shift and go to state 62 ]
-  ! MOD             [ shift and go to state 65 ]
-  ! POWER           [ shift and go to state 66 ]
 
 
 state 124
@@ -4820,8 +4808,6 @@ state 128
     DECREMENT       reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     PLUS            reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     MINUS           reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
-    MOD             reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
-    POWER           reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     SEMICOLON       reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     LESS            reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     LESSEQUAL       reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
@@ -4835,13 +4821,15 @@ state 128
     COMMA           reduce using rule 61 (int_expression -> int_expression MINUS int_expression .)
     MULTIPLY        shift and go to state 63
     DIVIDE          shift and go to state 64
+    MOD             shift and go to state 65
+    POWER           shift and go to state 66
 
   ! MULTIPLY        [ reduce using rule 61 (int_expression -> int_expression MINUS int_expression .) ]
   ! DIVIDE          [ reduce using rule 61 (int_expression -> int_expression MINUS int_expression .) ]
+  ! MOD             [ reduce using rule 61 (int_expression -> int_expression MINUS int_expression .) ]
+  ! POWER           [ reduce using rule 61 (int_expression -> int_expression MINUS int_expression .) ]
   ! PLUS            [ shift and go to state 61 ]
   ! MINUS           [ shift and go to state 62 ]
-  ! MOD             [ shift and go to state 65 ]
-  ! POWER           [ shift and go to state 66 ]
 
 
 state 129
@@ -4860,8 +4848,6 @@ state 129
     MINUS           reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     MULTIPLY        reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     DIVIDE          reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
-    MOD             reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
-    POWER           reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     SEMICOLON       reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     LESS            reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     LESSEQUAL       reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
@@ -4873,13 +4859,15 @@ state 129
     OR              reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     AND             reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
     COMMA           reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .)
+    MOD             shift and go to state 65
+    POWER           shift and go to state 66
 
+  ! MOD             [ reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .) ]
+  ! POWER           [ reduce using rule 62 (int_expression -> int_expression MULTIPLY int_expression .) ]
   ! PLUS            [ shift and go to state 61 ]
   ! MINUS           [ shift and go to state 62 ]
   ! MULTIPLY        [ shift and go to state 63 ]
   ! DIVIDE          [ shift and go to state 64 ]
-  ! MOD             [ shift and go to state 65 ]
-  ! POWER           [ shift and go to state 66 ]
 
 
 state 130
@@ -4898,8 +4886,6 @@ state 130
     MINUS           reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     MULTIPLY        reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     DIVIDE          reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
-    MOD             reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
-    POWER           reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     SEMICOLON       reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     LESS            reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     LESSEQUAL       reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
@@ -4911,13 +4897,15 @@ state 130
     OR              reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     AND             reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
     COMMA           reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .)
+    MOD             shift and go to state 65
+    POWER           shift and go to state 66
 
+  ! MOD             [ reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .) ]
+  ! POWER           [ reduce using rule 63 (int_expression -> int_expression DIVIDE int_expression .) ]
   ! PLUS            [ shift and go to state 61 ]
   ! MINUS           [ shift and go to state 62 ]
   ! MULTIPLY        [ shift and go to state 63 ]
   ! DIVIDE          [ shift and go to state 64 ]
-  ! MOD             [ shift and go to state 65 ]
-  ! POWER           [ shift and go to state 66 ]
 
 
 state 131
@@ -4930,14 +4918,14 @@ state 131
     (64) int_expression -> int_expression . MOD int_expression
     (65) int_expression -> int_expression . POWER int_expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLY resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
     INCREMENT       reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     DECREMENT       reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    PLUS            reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    MINUS           reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    MULTIPLY        reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    DIVIDE          reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    MOD             reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
+    POWER           reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     SEMICOLON       reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     LESS            reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     LESSEQUAL       reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
@@ -4949,19 +4937,13 @@ state 131
     OR              reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     AND             reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
     COMMA           reduce using rule 64 (int_expression -> int_expression MOD int_expression .)
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 62
-    MULTIPLY        shift and go to state 63
-    DIVIDE          shift and go to state 64
-    MOD             shift and go to state 65
-    POWER           shift and go to state 66
 
-  ! PLUS            [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
-  ! MINUS           [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
-  ! MULTIPLY        [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
-  ! DIVIDE          [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
-  ! MOD             [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
-  ! POWER           [ reduce using rule 64 (int_expression -> int_expression MOD int_expression .) ]
+  ! PLUS            [ shift and go to state 61 ]
+  ! MINUS           [ shift and go to state 62 ]
+  ! MULTIPLY        [ shift and go to state 63 ]
+  ! DIVIDE          [ shift and go to state 64 ]
+  ! MOD             [ shift and go to state 65 ]
+  ! POWER           [ shift and go to state 66 ]
 
 
 state 132
@@ -4974,14 +4956,14 @@ state 132
     (64) int_expression -> int_expression . MOD int_expression
     (65) int_expression -> int_expression . POWER int_expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLY resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for MOD resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
     INCREMENT       reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     DECREMENT       reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    PLUS            reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    MINUS           reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    MULTIPLY        reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    DIVIDE          reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    MOD             reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
+    POWER           reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     SEMICOLON       reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     LESS            reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     LESSEQUAL       reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
@@ -4993,19 +4975,13 @@ state 132
     OR              reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     AND             reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
     COMMA           reduce using rule 65 (int_expression -> int_expression POWER int_expression .)
-    PLUS            shift and go to state 61
-    MINUS           shift and go to state 62
-    MULTIPLY        shift and go to state 63
-    DIVIDE          shift and go to state 64
-    MOD             shift and go to state 65
-    POWER           shift and go to state 66
 
-  ! PLUS            [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
-  ! MINUS           [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
-  ! MULTIPLY        [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
-  ! DIVIDE          [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
-  ! MOD             [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
-  ! POWER           [ reduce using rule 65 (int_expression -> int_expression POWER int_expression .) ]
+  ! PLUS            [ shift and go to state 61 ]
+  ! MINUS           [ shift and go to state 62 ]
+  ! MULTIPLY        [ shift and go to state 63 ]
+  ! DIVIDE          [ shift and go to state 64 ]
+  ! MOD             [ shift and go to state 65 ]
+  ! POWER           [ shift and go to state 66 ]
 
 
 state 133
@@ -6430,30 +6406,6 @@ WARNING: shift/reduce conflict for GREATER in state 100 resolved as shift
 WARNING: shift/reduce conflict for GREATEREQUAL in state 100 resolved as shift
 WARNING: shift/reduce conflict for EQUALITY in state 100 resolved as shift
 WARNING: shift/reduce conflict for NOTEQUAL in state 100 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 120 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 120 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLY in state 120 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 120 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 120 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 120 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 121 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 121 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLY in state 121 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 121 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 121 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 121 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 131 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 131 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLY in state 131 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 131 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 131 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 131 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 132 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 132 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLY in state 132 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 132 resolved as shift
-WARNING: shift/reduce conflict for MOD in state 132 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 132 resolved as shift
 WARNING: shift/reduce conflict for OR in state 139 resolved as shift
 WARNING: shift/reduce conflict for AND in state 139 resolved as shift
 WARNING: shift/reduce conflict for OR in state 140 resolved as shift

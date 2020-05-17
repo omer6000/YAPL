@@ -1,9 +1,11 @@
 import ply.yacc as yacc
 from lexer import tokens
+import sys
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULTIPLY', 'DIVIDE')
+    ('left', 'MULTIPLY', 'DIVIDE'),
+    ('left', 'MOD', 'POWER'),
 )
 
 def p_calc(p):
@@ -313,4 +315,5 @@ def p_empty(p):
     p[0] = None
 
 def p_error(p):
-    print("Syntax error in input!")
+    print("TypeError")
+

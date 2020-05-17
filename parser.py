@@ -199,6 +199,9 @@ def p_code(p):
     code : assignment SEMICOLON
          | declaration SEMICOLON
          | variable_update SEMICOLON
+         | increment SEMICOLON
+         | decrement SEMICOLON
+         | printoutput SEMICOLON
     '''
     p[0] = p[1]
 

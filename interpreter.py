@@ -15,12 +15,23 @@ def eval_exp(tree):
     elif type(tree) is str:
         return tree
     elif (type(tree) is tuple) and tree[0] == "print":
-        if len(tree[1]) > 0:
-            print(tree[1][0],"", end="")
-            arr = tree[1][1:]
-            eval_exp(("print", arr))
+        arr = tree[1]
+        if len(arr) > 0:
+            for x in arr:
+                print(eval_exp(x),"",end="")
+            print("")
     elif tree[0] == "dowhile":
-        print(tree)
+        while True:
+            code_inside = tree[1]
+            for x in code_inside:
+                eval_exp(x)
+            condition = tree[2]
+            condition_tuple = (condition[1], condition[2], condition[3])
+            for x in code_inside: # Removing variables
+                if x[0] == "assignment":
+                    del var_env[x[2]]
+            if not eval_exp(condition_tuple):
+                break
     elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:
@@ -59,6 +70,12 @@ def eval_exp(tree):
             return var_env[tree[1]][1]
         else:
             print("Error!!!")
+    elif tree[0] == "increment":
+        if tree[1][0] == 'variable' and (tree[1][1] in var_env):
+            var_env[tree[1][1]][1] = var_env[tree[1][1]][1] + 1
+    elif tree[0] == "decrement":
+        if tree[1][0] == 'variable' and (tree[1][1] in var_env):
+            var_env[tree[1][1]][1] = var_env[tree[1][1]][1] - 1
     elif tree[0] == "+":
         return (eval_exp(tree[1]) + eval_exp(tree[2]))
     elif tree[0] == "-":

@@ -16,7 +16,10 @@ def eval_exp(tree):
     elif type(tree) is str:
         return tree
     elif (type(tree) is tuple) and tree[0] == "print":
-        print(eval_exp(tree[1]))
+        if len(tree[1]) > 0:
+            print(tree[1][0],"", end="")
+            arr = tree[1][1:]
+            eval_exp(("print", arr))
     elif tree[0] == "assignment":
         name = tree[2]
         if name in var_env:
@@ -67,6 +70,16 @@ def eval_exp(tree):
         return eval_exp(tree[1]) ** eval_exp(tree[2])
     elif tree[0] == "%":
         return eval_exp(tree[1]) % eval_exp(tree[2])
+    elif tree[0] == ">":
+        return eval_exp(tree[1]) > eval_exp(tree[2])
+    elif tree[0] == ">=":
+        return eval_exp(tree[1]) >= eval_exp(tree[2])
+    elif tree[0] == "<":
+        return eval_exp(tree[1]) < eval_exp(tree[2])
+    elif tree[0] == "<=":
+        return eval_exp(tree[1]) <= eval_exp(tree[2])
+    elif tree[0] == "==":
+        return eval_exp(tree[1]) <= eval_exp(tree[2])
     elif tree[0] == "&&":
         val_left = None
         val_right = None
@@ -84,8 +97,8 @@ def eval_exp(tree):
             val_right = eval_exp(tree[2])
         return val_left and val_right
     elif tree[0] == "||":
-        val_left = True
-        val_right = True
+        val_left = None
+        val_right = None
         if tree[1] == "false":
             val_left = False
         elif tree[1] == "true":
@@ -98,8 +111,14 @@ def eval_exp(tree):
             val_right = True
         else:
             val_right = eval_exp(tree[2])
-        return val_left or val_right  
-
+        return val_left or val_right
+    elif tree[0] == "not":
+        if tree[1] == "false":
+            return True
+        elif tree[1] == "true":
+            return False
+        else:
+            return not eval_exp(tree[1])
  
 if __name__ == "__main__":
     if len(sys.argv) == 2:

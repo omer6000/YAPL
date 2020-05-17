@@ -27,7 +27,17 @@ tokens = [
     'INCREMENT',
     'DECREMENT',
     'AND',
-    'OR'
+    'OR',
+    'LESS',
+    'LESSEQUAL',
+    'GREATER',
+    'GREATEREQUAL',
+    'NOT',
+    'EQUALITY',
+    'DO',
+    'WHILE',
+    'LP',
+    'RP'
 ]
 
 t_PLUS = r'\+'
@@ -41,11 +51,39 @@ t_RB = r'\)'
 t_COMMA = r'\,'
 t_MOD = r'\%'
 t_POWER = r'\^'
+t_LESS = r'\<'
+t_GREATER = r'\>'
+t_LP = "\{"
+t_RP = "\}"
 t_ignore = ' \t\v\r'
 
 def t_newline(t):
     r'\n'
     t.lexer.lineno += 1
+
+def t_EQUALITY(t):
+    r'\=\='
+    return t
+
+def t_DO(t):
+    r'do'
+    return t
+
+def t_WHILE(t):
+    r'while'
+    return t
+
+def t_LESSEQUAL(t):
+    r'\<\='
+    return t
+
+def t_GREATEREQUAL(t):
+    r'\>\='
+    return t
+
+def t_NOT(t):
+    r'not'
+    return t
 
 def t_INCREMENT(t):
     r'\+\+'

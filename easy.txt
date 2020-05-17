@@ -1,2 +1,5 @@
-bool condition = (false && true) || true;
-print(condition);
+int x = 5;
+do {
+    int a = 3;
+    int a = 5;
+} while(true);

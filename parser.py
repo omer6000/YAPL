@@ -14,26 +14,17 @@ def p_calc(p):
          | declaration SEMICOLON calc
          | variable_update SEMICOLON
          | variable_update SEMICOLON calc
-         | printstatement SEMICOLON
-         | printstatement SEMICOLON calc
+         | expression SEMICOLON
+         | expression SEMICOLON calc
+         | printoutput SEMICOLON
+         | printoutput SEMICOLON calc
+         | dowhile_expression SEMICOLON
+         | dowhile_expression SEMICOLON calc
     '''
-        #  | statement SEMICOLON
-        #  | statement SEMICOLON calc
     if len(p) == 3:
         p[0] = [p[1]]
     else:
         p[0] = [p[1]] + p[3]
-    
-# def p_statement(p):
-#     '''
-#     statement : var
-#               | INT
-#               | DOUBLE
-#               | BOOL
-#               | CHAR
-#               | STRING
-#     '''
-#     p[0] = (p[1])
 
 def p_var(p):
     '''
@@ -41,11 +32,21 @@ def p_var(p):
     '''
     p[0] = ("variable", p[1])
 
-def p_print(p):
+def p_printstatement(p):
     '''
-    printstatement : PRINT LB expression RB
+    printoutput : PRINT LB printexpression RB
     '''
     p[0] = ("print", p[3])
+
+def p_printexpression(p):
+    '''
+    printexpression : expression
+                    | expression COMMA printexpression
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[3]
 
 def p_expression(p):
     '''
@@ -55,7 +56,6 @@ def p_expression(p):
                | int_expression
                | string_expression
                | bool_expression
-               | expression COMMA expression
     '''
     p[0] = p[1]
 
@@ -151,8 +151,19 @@ def p_bool_expression(p):
     '''
     bool_expression : bool_expression OR bool_expression
                     | bool_expression AND bool_expression
+                    | expression LESS expression
+                    | expression LESSEQUAL expression
+                    | expression GREATER expression
+                    | expression GREATEREQUAL expression
+                    | expression EQUALITY expression
     '''
     p[0] = (p[2], p[1], p[3])
+
+def p_bool_not(p):
+    '''
+    bool_expression : NOT bool_expression
+    '''
+    p[0] = ("not", p[2])
 
 def p_bool_bracket(p):
     '''
@@ -178,6 +189,24 @@ def p_empty(p):
     empty :
     '''
     p[0] = None
+
+def p_code(p):
+    '''
+    code : assignment SEMICOLON
+         | declaration SEMICOLON
+         | variable_update SEMICOLON
+         | assignment SEMICOLON code
+         | declaration SEMICOLON code
+         | variable_update SEMICOLON code
+    '''
+    p[0] = p[1]
+
+def p_dowhile(p):
+    '''
+    dowhile_expression : DO LP code RP WHILE LB bool_expression RB
+                       | DO LP dowhile_expression RP WHILE LB bool_expression RB
+    '''
+    p[0] = ("dowhile" , p[3], p[7])
 
 def p_error(p):
     print("Syntax error in input!")

@@ -24,6 +24,8 @@ def p_calc(p):
          | increment SEMICOLON calc
          | decrement SEMICOLON
          | decrement SEMICOLON calc
+         | struct SEMICOLON
+         | struct SEMICOLON calc
     '''
     if len(p) == 3:
         p[0] = [p[1]]
@@ -70,6 +72,7 @@ def p_declaration(p):
                 | STRING_TYPE NAME
                 | CHARACTER_TYPE NAME
                 | BOOL_TYPE NAME
+                | NAME NAME
                 | empty
     '''
     p[0] = ("declaration", p[1], p[2])
@@ -188,12 +191,6 @@ def p_string_expression(p):
     '''
     p[0] = (p[2], p[1], p[3])
 
-def p_empty(p):
-    '''
-    empty :
-    '''
-    p[0] = None
-
 def p_code(p):
     '''
     code : assignment SEMICOLON
@@ -239,6 +236,29 @@ def p_dowhile(p):
     '''
     p[0] = ("dowhile" , p[3], p[7])
 
+def p_struct_code(p):
+    '''
+    structcode : declaration SEMICOLON
+               | assignment SEMICOLON
+    '''
+    p[0] = p[1]
+
+def p_insidestruct(p):
+    '''
+    insidestruct : structcode
+                 | structcode insidestruct
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[2]
+
+def p_struct(p):
+    '''
+    struct : STRUCT NAME LP insidestruct RP
+    '''
+    p[0] = ("struct", p[2], p[4])
+
 def p_increment(p):
     '''
     increment : int_expression INCREMENT
@@ -250,6 +270,12 @@ def p_decrement(p):
     decrement : int_expression DECREMENT
     '''
     p[0] = ("decrement", p[1])
+
+def p_empty(p):
+    '''
+    empty :
+    '''
+    p[0] = None
 
 def p_error(p):
     print("Syntax error in input!")

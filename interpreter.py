@@ -5,9 +5,11 @@ import ply.yacc as yacc
 import sys
 
 var_env = {}
-
+var_struct = {}
 def eval_exp(tree):
     global var_env
+    global var_struct
+    # print(tree)
     if type(tree) is int:
         return tree
     elif type(tree) is float:
@@ -20,7 +22,19 @@ def eval_exp(tree):
             for x in arr:
                 print(eval_exp(x),"",end="")
             print("")
+    elif tree[0] == "struct":
+        # print(tree)
+        name = tree[1]
+        if name in var_struct:
+            print("Structure already declared!!")
+            sys.exit()
+        else:
+            var_struct[name] = []
+            for var in tree[2]:
+                var_struct[name].append((var[1], var[2]))
     elif tree[0] == "dowhile":
+        # print(tree)
+        pass
         while True:
             code_inside = tree[1]
             for x in code_inside:
@@ -36,6 +50,7 @@ def eval_exp(tree):
         name = tree[2]
         if name in var_env:
             print("Error variable already declared!!!")
+            sys.exit()
         else:
             typeval = tree[1]
             val = tree[3]
@@ -47,15 +62,26 @@ def eval_exp(tree):
                 var_env[name] = [typeval, eval_exp(val)]
     elif tree[0] == "declaration":
         name = tree[2]
-        if name in var_env:
+        typeval = tree[1]
+        if (typeval in var_struct) == False:
+            print("Wrong data type!")
+            sys.exit()
+        elif typeval in var_struct:
+            var_env[name] = {}
+        elif name in var_env:
             print("Error variable already declared!!!")
+            sys.exit()
         else:
-            typeval = tree[1]
             var_env[name] = [typeval, ""]
     elif tree[0] == "variable_update":
         name = tree[1]
         val = tree[2]
-        if name in var_env:
+        if ("." in name) and (name.split(".")[0] in var_env):
+            struct_name = name.split(".")[0]
+            variable_name = name.split(".")[1]
+            var_env[struct_name][variable_name] = val
+            # print(var_env)
+        elif name in var_env:
             typeval = var_env[name][0]
             if typeval == 'bool' and val == "false":
                 var_env[name] = [typeval, False]
@@ -65,11 +91,15 @@ def eval_exp(tree):
                 var_env[name] = [typeval, eval_exp(val)]
         else:
             print("Variable does not exist!!")
+            sys.exit()
     elif tree[0] == "variable":
         if tree[1] in var_env:
             return var_env[tree[1]][1]
+        elif ("." in tree[1]) and (tree[1].split(".")[0] in var_env) and (tree[1].split(".")[1] in var_env[tree[1].split(".")[0]]):
+            return var_env[tree[1].split(".")[0]][tree[1].split(".")[1]]
         else:
-            print("Error!!!")
+            print("AttributeError")
+            sys.exit()
     elif tree[0] == "increment":
         if tree[1][0] == 'variable' and (tree[1][1] in var_env):
             var_env[tree[1][1]][1] = var_env[tree[1][1]][1] + 1

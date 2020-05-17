@@ -1,8 +1,27 @@
-int i = 0;
-do {
-    int j = 5;
-    int k = 3;
-    k = 2;
-    i++;
-    print(i);
-} while(i < 5);
+struct book {
+    string title;
+    string author;
+    string subject;
+    int book_id;
+};
+
+book book1;
+book book2;
+book1.title = "The Theory of Computation";
+book1.author = "Michael Sipser";
+book1.subject = "Theory of Computation";
+book1.book_id = 45315;
+book2.title = "Race Against the Machine";
+book2.author = "Andrew McAfee";
+book2.subject = "Digital Technology";
+book2.book_id = 92315;
+print(book1.title);
+print(book1.author);
+print(book1.subject);
+print(book1.book_id);
+print("");
+print(book2.title);
+print(book2.author);
+print(book2.subject);
+print(book2.book_id);
+print(book2.publisher);

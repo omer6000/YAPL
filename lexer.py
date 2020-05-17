@@ -37,7 +37,8 @@ tokens = [
     'DO',
     'WHILE',
     'LP',
-    'RP'
+    'RP',
+    'STRUCT'
 ]
 
 t_PLUS = r'\+'
@@ -67,6 +68,10 @@ def t_EQUALITY(t):
 
 def t_DO(t):
     r'do'
+    return t
+
+def t_STRUCT(t):
+    r'struct'
     return t
 
 def t_WHILE(t):
@@ -150,7 +155,7 @@ def t_PRINT(t):
     return t
 
 def t_NAME(t):
-    r'[a-zA-Z][a-zA-Z0-9]*'
+    r'[a-zA-Z_][_a-zA-Z0-9.]*'
     t.type = "NAME"
     return t
 

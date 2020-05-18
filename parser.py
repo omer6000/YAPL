@@ -224,6 +224,8 @@ def p_insidewhile(p):
     '''
     insidewhile : code
                 | code insidewhile 
+                | dowhile_expression
+                | dowhile_expression insidewhile
     '''
     if len(p) == 2:
         p[0] = [p[1]]
